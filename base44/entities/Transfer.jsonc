@@ -1,0 +1,40 @@
+{
+  "name": "Transfer",
+  "type": "object",
+  "properties": {
+    "from_account_id": {
+      "type": "string",
+      "description": "ID da conta de origem"
+    },
+    "from_account_name": {
+      "type": "string",
+      "description": "Nome da conta de origem (cache)"
+    },
+    "to_account_id": {
+      "type": "string",
+      "description": "ID da conta de destino"
+    },
+    "to_account_name": {
+      "type": "string",
+      "description": "Nome da conta de destino (cache)"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Valor transferido"
+    },
+    "transfer_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data da transferência"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição da transferência"
+    }
+  },
+  "required": [
+    "from_account_id",
+    "to_account_id",
+    "amount"
+  ]
+}

@@ -1,0 +1,12 @@
+/* Mobile native enhancements */
+html,
+body {
+  overscroll-behavior: none;
+}
+
+button,
+nav,
+svg {
+  -webkit-user-select: none;
+  user-select: none;
+}

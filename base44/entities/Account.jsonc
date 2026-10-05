@@ -1,0 +1,41 @@
+{
+  "name": "Account",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome da conta"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Caixa",
+        "Banco",
+        "Cofrinho",
+        "Carteira",
+        "Outra"
+      ],
+      "default": "Caixa",
+      "description": "Tipo da conta"
+    },
+    "balance": {
+      "type": "number",
+      "default": 0,
+      "description": "Saldo atual"
+    },
+    "color": {
+      "type": "string",
+      "default": "#4A5D23",
+      "description": "Cor para identificação visual"
+    },
+    "icon": {
+      "type": "string",
+      "default": "Wallet",
+      "description": "Ícone para identificação visual"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "name": "AppSettings",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Nome da empresa"
+    },
+    "company_logo": {
+      "type": "string",
+      "description": "URL do logo"
+    },
+    "company_cover": {
+      "type": "string",
+      "description": "URL da capa/banner"
+    },
+    "company_phone": {
+      "type": "string",
+      "description": "Telefone de contato"
+    },
+    "company_email": {
+      "type": "string",
+      "description": "Email de contato"
+    },
+    "company_address": {
+      "type": "string",
+      "description": "Endereço completo"
+    },
+    "company_instagram": {
+      "type": "string",
+      "description": "Instagram"
+    },
+    "company_facebook": {
+      "type": "string",
+      "description": "Facebook"
+    },
+    "primary_color": {
+      "type": "string",
+      "default": "#2d91a8",
+      "description": "Cor primária"
+    },
+    "secondary_color": {
+      "type": "string",
+      "default": "#52cfc1",
+      "description": "Cor secundária"
+    },
+    "dark_mode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Modo escuro ativado"
+    },
+    "fab_position": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "default": "left",
+      "description": "Posição do botão flutuante"
+    },
+    "footer_text": {
+      "type": "string",
+      "default": "Obrigado pela preferência! ✨",
+      "description": "Texto do rodapé"
+    },
+    "quotation_notes": {
+      "type": "string",
+      "default": "Este orçamento é válido por 15 dias",
+      "description": "Observação em orçamentos"
+    },
+    "receipt_notes": {
+      "type": "string",
+      "default": "Pagamento recebido com sucesso",
+      "description": "Observação em recibos"
+    },
+    "company_info": {
+      "type": "string",
+      "description": "Informações da empresa para rodapé"
+    }
+  },
+  "required": []
+}

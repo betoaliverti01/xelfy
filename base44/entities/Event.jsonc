@@ -1,0 +1,48 @@
+{
+  "name": "Event",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Título do evento/reunião"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Reunião",
+        "Evento"
+      ],
+      "default": "Reunião",
+      "description": "Tipo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Hora de início"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "Hora de término"
+    },
+    "location": {
+      "type": "string",
+      "description": "Local"
+    },
+    "participants": {
+      "type": "string",
+      "description": "Participantes"
+    }
+  },
+  "required": [
+    "title",
+    "date"
+  ]
+}

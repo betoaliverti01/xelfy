@@ -1,0 +1,46 @@
+{
+  "name": "ProductRecipe",
+  "type": "object",
+  "properties": {
+    "catalog_item_id": {
+      "type": "string",
+      "description": "ID do produto no catálogo"
+    },
+    "catalog_item_name": {
+      "type": "string",
+      "description": "Nome do produto (cache)"
+    },
+    "recipe": {
+      "type": "array",
+      "description": "Lista de ingredientes/componentes",
+      "items": {
+        "type": "object",
+        "properties": {
+          "inventory_id": {
+            "type": "string"
+          },
+          "inventory_name": {
+            "type": "string"
+          },
+          "quantity_needed": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "total_cost": {
+      "type": "number",
+      "description": "Custo total calculado"
+    }
+  },
+  "required": [
+    "catalog_item_id",
+    "recipe"
+  ]
+}

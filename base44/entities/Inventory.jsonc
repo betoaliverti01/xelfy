@@ -1,0 +1,49 @@
+{
+  "name": "Inventory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome do item do estoque"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição do item"
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "un",
+        "kg",
+        "g",
+        "L",
+        "ml",
+        "m",
+        "cm",
+        "pacote",
+        "caixa"
+      ],
+      "default": "un",
+      "description": "Unidade de medida"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 0,
+      "description": "Quantidade em estoque"
+    },
+    "unit_cost": {
+      "type": "number",
+      "description": "Custo por unidade"
+    },
+    "min_quantity": {
+      "type": "number",
+      "default": 0,
+      "description": "Quantidade mínima (alerta)"
+    }
+  },
+  "required": [
+    "name",
+    "unit",
+    "unit_cost"
+  ]
+}

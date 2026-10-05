@@ -1,0 +1,131 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "ID do cliente"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Nome do cliente (cache)"
+    },
+    "items": {
+      "type": "array",
+      "description": "Lista de itens do pedido",
+      "items": {
+        "type": "object",
+        "properties": {
+          "catalog_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit_price": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Orçamento",
+        "Pendente",
+        "Aprovado",
+        "Concluído",
+        "Cancelado"
+      ],
+      "default": "Orçamento"
+    },
+    "order_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do pedido"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de vencimento"
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Subtotal"
+    },
+    "discount": {
+      "type": "number",
+      "description": "Desconto"
+    },
+    "total": {
+      "type": "number",
+      "description": "Total final"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observações"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "Dinheiro",
+        "PIX",
+        "Cartão Débito",
+        "Cartão Crédito",
+        "Boleto"
+      ],
+      "description": "Forma de pagamento"
+    },
+    "installments": {
+      "type": "number",
+      "default": 1,
+      "description": "Número de parcelas"
+    },
+    "installment_details": {
+      "type": "array",
+      "description": "Detalhes de cada parcela",
+      "items": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pendente",
+              "Pago"
+            ],
+            "default": "Pendente"
+          },
+          "payment_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "interest_amount": {
+            "type": "number",
+            "default": 0,
+            "description": "Valor dos juros aplicados a esta parcela"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "client_id",
+    "status"
+  ]
+}

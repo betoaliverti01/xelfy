@@ -1,0 +1,65 @@
+{
+  "name": "Financial",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome da movimentação"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Receita",
+        "Despesa"
+      ],
+      "description": "Tipo de movimentação"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Valor"
+    },
+    "category": {
+      "type": "string",
+      "description": "Categoria (Venda, Aluguel, Água, Luz, etc)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pago",
+        "Aberto"
+      ],
+      "description": "Status do pagamento"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de vencimento"
+    },
+    "payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de pagamento"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição"
+    },
+    "order_id": {
+      "type": "string",
+      "description": "ID do pedido relacionado (se houver)"
+    },
+    "account_id": {
+      "type": "string",
+      "description": "ID da conta afetada"
+    },
+    "account_name": {
+      "type": "string",
+      "description": "Nome da conta (cache)"
+    }
+  },
+  "required": [
+    "type",
+    "amount",
+    "category"
+  ]
+}

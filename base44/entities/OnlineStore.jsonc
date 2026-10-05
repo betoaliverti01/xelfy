@@ -1,0 +1,41 @@
+{
+  "name": "OnlineStore",
+  "type": "object",
+  "properties": {
+    "store_url": {
+      "type": "string",
+      "description": "URL única da loja (ex: minhaloja)"
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false,
+      "description": "Loja publicada e ativa"
+    },
+    "banner_image": {
+      "type": "string",
+      "description": "URL da imagem do banner"
+    },
+    "whatsapp_number": {
+      "type": "string",
+      "description": "Número do WhatsApp para pedidos"
+    },
+    "enable_notes": {
+      "type": "boolean",
+      "default": true,
+      "description": "Habilitar campo de observações"
+    },
+    "enable_payment_method": {
+      "type": "boolean",
+      "default": true,
+      "description": "Habilitar seleção de forma de pagamento"
+    },
+    "enable_order_type": {
+      "type": "boolean",
+      "default": true,
+      "description": "Habilitar seleção de tipo de pedido"
+    }
+  },
+  "required": [
+    "store_url"
+  ]
+}
