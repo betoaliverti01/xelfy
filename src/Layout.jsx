@@ -73,56 +73,57 @@ export default function Layout({ children, currentPageName }) {
         }
 
         /* Consistent Dark Petroleum surface colors for all cards & popups */
-        .dark .bg-\\[\\#FAFAFA\\],
-        .dark .bg-\\[\\#fafafa\\],
-        .dark .bg-gray-950 {
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-\\[\\#FAFAFA\\],
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-\\[\\#fafafa\\],
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-gray-950 {
           background-color: #07151D !important;
         }
 
-        .dark .bg-white,
-        .dark .bg-gray-900 {
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-white:not(.quotation-paper *):not(.receipt-paper *),
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-gray-900 {
           background-color: #0D222E !important;
-          border-color: #1C3F54 !important;
+          border-color: #1C4156 !important;
         }
 
-        .dark .bg-gray-50,
-        .dark .bg-gray-100,
-        .dark .bg-gray-800 {
-          background-color: #122C3B !important;
-          border-color: #1C3F54 !important;
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-gray-50:not(.quotation-paper *):not(.receipt-paper *),
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-gray-100:not(.quotation-paper *):not(.receipt-paper *),
+        .dark:not(.quotation-paper):not(.receipt-paper) .bg-gray-800 {
+          background-color: #133345 !important;
+          border-color: #1C4156 !important;
         }
 
-        .dark .text-\\[\\#333333\\],
-        .dark .text-\\[\\#333\\],
-        .dark .text-gray-900,
-        .dark .text-gray-800,
-        .dark .text-gray-700 {
-          color: #E5F3F7 !important;
+        /* High-contrast text on dark background */
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-\\[\\#333333\\],
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-\\[\\#333\\],
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-gray-900,
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-gray-800,
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-gray-700 {
+          color: #FFFFFF !important;
         }
 
-        .dark .text-gray-600,
-        .dark .text-gray-500 {
-          color: #8EB3BD !important;
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-gray-600,
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-gray-500 {
+          color: #CFEAF2 !important;
         }
 
-        .dark .text-gray-400 {
-          color: #7296A0 !important;
+        .dark:not(.quotation-paper):not(.receipt-paper) .text-gray-400 {
+          color: #A3D2DF !important;
         }
 
-        .dark input,
-        .dark select,
-        .dark textarea {
+        .dark input:not(.quotation-paper *):not(.receipt-paper *),
+        .dark select:not(.quotation-paper *):not(.receipt-paper *),
+        .dark textarea:not(.quotation-paper *):not(.receipt-paper *) {
           background-color: #081924 !important;
-          border-color: #1C3F54 !important;
-          color: #E5F3F7 !important;
+          border-color: #235069 !important;
+          color: #FFFFFF !important;
         }
 
         .dark input:focus,
         .dark select:focus,
         .dark textarea:focus {
-          border-color: #34A8A6 !important;
+          border-color: #4BCBB4 !important;
           outline: none !important;
-          box-shadow: 0 0 0 2px rgba(52, 168, 166, 0.3) !important;
+          box-shadow: 0 0 0 2px rgba(75, 203, 180, 0.3) !important;
         }
 
         /* Popups, Dialogs and Modals */
@@ -130,8 +131,57 @@ export default function Layout({ children, currentPageName }) {
         .dark [role="dialog"],
         .dark [data-radix-popper-content-wrapper] > div {
           background-color: #0D222E !important;
-          border-color: #1C3F54 !important;
-          color: #E5F3F7 !important;
+          border-color: #1C4156 !important;
+          color: #FFFFFF !important;
+        }
+
+        /* CRITICAL: Protect Quotation and Receipt Export Canvas from Dark Mode overrides */
+        .quotation-paper,
+        .quotation-paper *,
+        .receipt-paper,
+        .receipt-paper * {
+          color-scheme: light !important;
+        }
+
+        .quotation-paper,
+        .receipt-paper {
+          background-color: #FFFFFF !important;
+          color: #0F172A !important;
+        }
+
+        .quotation-paper .bg-white,
+        .receipt-paper .bg-white {
+          background-color: #FFFFFF !important;
+        }
+
+        .quotation-paper .bg-slate-50,
+        .receipt-paper .bg-slate-50 {
+          background-color: #F8FAFC !important;
+        }
+
+        .quotation-paper .text-slate-900,
+        .quotation-paper .text-\\[\\#333333\\],
+        .quotation-paper .text-gray-900,
+        .receipt-paper .text-slate-900,
+        .receipt-paper .text-\\[\\#333333\\],
+        .receipt-paper .text-gray-900 {
+          color: #0F172A !important;
+        }
+
+        .quotation-paper .text-slate-600,
+        .quotation-paper .text-slate-500,
+        .quotation-paper .text-gray-600,
+        .quotation-paper .text-gray-500,
+        .receipt-paper .text-slate-600,
+        .receipt-paper .text-slate-500,
+        .receipt-paper .text-gray-600,
+        .receipt-paper .text-gray-500 {
+          color: #475569 !important;
+        }
+
+        .quotation-paper .text-slate-400,
+        .receipt-paper .text-slate-400 {
+          color: #64748B !important;
         }
 
         html {

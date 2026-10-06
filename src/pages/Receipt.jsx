@@ -90,8 +90,8 @@ export default function Receipt() {
     
     try {
       const canvas = await html2canvas(contentRef.current, {
-        scale: 2,
-        backgroundColor: '#FAFAFA',
+        scale: 3,
+        backgroundColor: '#FFFFFF',
         logging: false,
         useCORS: true,
         allowTaint: true,
@@ -112,8 +112,8 @@ export default function Receipt() {
     
     try {
       const canvas = await html2canvas(contentRef.current, {
-        scale: 2,
-        backgroundColor: '#FAFAFA',
+        scale: 3,
+        backgroundColor: '#FFFFFF',
         logging: false,
         useCORS: true,
         allowTaint: true,
@@ -196,22 +196,22 @@ export default function Receipt() {
   const companySettings = settings[0] || {};
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-white pb-20">
       {/* Header */}
-      <div className="bg-white px-5 pt-12 pb-6 shadow-sm print:hidden">
-        <div className="flex items-center justify-between">
+      <div className="bg-[#0D222E] border-b border-[#1C4156] px-5 pt-10 pb-5 shadow-sm print:hidden">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-white"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+            <ArrowLeft className="w-5 h-5" strokeWidth={2} />
           </button>
-          <h1 className="text-lg font-bold text-[#333333]">Recibo</h1>
+          <h1 className="text-lg font-bold text-white">Recibo de Pagamento</h1>
           <button
             onClick={handlePrint}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-white"
           >
-            <Printer className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+            <Printer className="w-5 h-5" strokeWidth={2} />
           </button>
         </div>
       </div>
@@ -222,15 +222,21 @@ export default function Receipt() {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-2xl mx-auto px-5 py-6"
       >
-        <div ref={contentRef} className="bg-white rounded-[20px] shadow-lg overflow-hidden print:shadow-none">
+        <div 
+          ref={contentRef} 
+          className="receipt-paper bg-white rounded-2xl shadow-xl overflow-hidden print:shadow-none border border-slate-200"
+          style={{ backgroundColor: '#FFFFFF', color: '#0F172A' }}
+        >
           {/* Company Header */}
-          {companySettings.company_cover && (
-            <div className="h-24 bg-gradient-to-br from-[#4A5D23] to-[#6b7f3a] relative overflow-hidden">
+          {companySettings.company_cover ? (
+            <div className="h-24 bg-gradient-to-br from-[#00485C] to-[#0A3342] relative overflow-hidden">
               <img src={companySettings.company_cover} alt="Capa" className="w-full h-full object-cover" crossOrigin="anonymous" />
             </div>
+          ) : (
+            <div className="h-4 bg-[#00485C]" />
           )}
 
-          <div className="p-6 border-b">
+          <div className="p-6 border-b border-slate-200">
             <div className="flex items-center gap-4 mb-6">
               {companySettings.company_logo && (
                 <div className="w-20 h-20 rounded-full overflow-hidden bg-white shadow-md flex-shrink-0">
@@ -238,19 +244,19 @@ export default function Receipt() {
                 </div>
               )}
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-[#333333] mb-1">
+                <h2 className="text-2xl font-bold text-slate-900 mb-1">
                   {companySettings.company_name || user?.full_name || 'Minha Empresa'}
                 </h2>
                 {companySettings.company_phone && (
-                  <p className="text-sm text-gray-500">{companySettings.company_phone}</p>
+                  <p className="text-sm text-slate-500">{companySettings.company_phone}</p>
                 )}
                 {companySettings.company_email && (
-                  <p className="text-sm text-gray-500">{companySettings.company_email}</p>
+                  <p className="text-sm text-slate-500">{companySettings.company_email}</p>
                 )}
               </div>
             </div>
             
-            <h3 className="text-xl font-bold text-[#333333] text-center mb-4">RECIBO DE PAGAMENTO</h3>
+            <h3 className="text-xl font-black text-[#00485C] text-center mb-4 uppercase tracking-wider">RECIBO DE PAGAMENTO</h3>
           </div>
 
           {/* Order Info */}
@@ -371,33 +377,33 @@ export default function Receipt() {
                     <span>-{formatCurrency(order.discount)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-xl font-bold text-[#333333] pt-2 border-t">
+                <div className="flex justify-between text-xl font-black text-slate-900 pt-3 border-t border-slate-200">
                   <span>TOTAL</span>
-                  <span className="text-[#4A5D23]">{formatCurrency(order.total)}</span>
+                  <span className="text-[#00485C]">{formatCurrency(order.total)}</span>
                 </div>
               </div>
             )}
           </div>
 
           {/* Footer */}
-          <div className="p-6 bg-[#F5F5DC] text-center">
+          <div className="p-6 bg-slate-50 border-t border-slate-200 text-center">
             {companySettings.receipt_notes && (
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-slate-700 mb-3">
                 <strong>{companySettings.receipt_notes}</strong>
               </p>
             )}
 
             {companySettings.company_info && (
-              <p className="text-xs text-gray-600 mb-3 whitespace-pre-wrap">
+              <p className="text-xs text-slate-600 mb-3 whitespace-pre-wrap">
                 {companySettings.company_info}
               </p>
             )}
 
             {companySettings.company_address && (
-              <p className="text-xs text-gray-500 mb-2">{companySettings.company_address}</p>
+              <p className="text-xs text-slate-500 mb-2">{companySettings.company_address}</p>
             )}
 
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
+            <div className="flex items-center justify-center gap-4 text-xs text-slate-500">
               {companySettings.company_instagram && (
                 <span>{companySettings.company_instagram}</span>
               )}
@@ -407,7 +413,7 @@ export default function Receipt() {
             </div>
 
             {companySettings.footer_text && (
-              <p className="text-xs text-gray-400 mt-3">
+              <p className="text-xs text-slate-400 mt-3">
                 {companySettings.footer_text.replace(/✨/g, '').replace(/🙏/g, '').trim()}
               </p>
             )}
@@ -416,16 +422,17 @@ export default function Receipt() {
           </motion.div>
 
       {/* Action Buttons - Hidden on print */}
-      <div className="fixed bottom-6 right-6 print:hidden">
+      <div className="fixed bottom-6 right-6 print:hidden z-50">
         <button
           onClick={handleDownloadImage}
           disabled={isDownloading}
-          className="w-14 h-14 bg-blue-500 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-50"
+          title="Baixar Imagem PNG"
+          className="w-14 h-14 bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 border-2 border-white/20"
         >
           {isDownloading ? (
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-gray-950 border-t-transparent rounded-full animate-spin" />
           ) : (
-            <Download className="w-6 h-6 text-white" strokeWidth={2} />
+            <Download className="w-6 h-6 text-gray-950" strokeWidth={2.5} />
           )}
         </button>
       </div>

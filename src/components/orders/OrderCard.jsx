@@ -4,93 +4,108 @@ import { Calendar, ChevronRight, Check, FileText, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-const statusColors = {
-  'Orçamento': 'bg-blue-100 text-blue-700',
-  'Pendente': 'bg-amber-100 text-amber-700',
-  'Aprovado': '',
-  'Concluído': 'bg-green-100 text-green-700',
-  'Cancelado': 'bg-red-100 text-red-700',
-};
-
-const getStatusStyle = (status) => {
-  if (status === 'Aprovado') {
-    return { backgroundColor: 'var(--color-primary)20', color: 'var(--color-primary)' };
+const getStatusBadge = (status) => {
+  switch (status) {
+    case 'Orçamento':
+      return 'bg-sky-950/80 text-sky-300 border-sky-800/40';
+    case 'Pendente':
+      return 'bg-amber-950/80 text-amber-300 border-amber-800/40';
+    case 'Aprovado':
+      return 'bg-teal-950/80 text-[#4BCBB4] border-[#34A8A6]/50';
+    case 'Concluído':
+      return 'bg-emerald-950/80 text-emerald-300 border-emerald-800/40';
+    case 'Cancelado':
+      return 'bg-rose-950/80 text-rose-300 border-rose-800/40';
+    default:
+      return 'bg-[#081924] text-[#A3D2DF] border-[#1C4156]';
   }
-  return {};
 };
 
 export default function OrderCard({ order, onApprove, onGenerateReceipt, onShare, onClick }) {
   const formatDate = (dateStr) => {
     if (!dateStr) return '-';
-    return format(new Date(dateStr), "dd MMM", { locale: ptBR });
+    try {
+      return format(new Date(dateStr), "dd 'de' MMM", { locale: ptBR });
+    } catch (_) {
+      return dateStr;
+    }
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-[20px] p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+      className="group bg-[#0D222E] rounded-2xl p-4 sm:p-5 shadow-sm border border-[#1C4156] hover:border-[#34A8A6]/60 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between"
       onClick={onClick}
     >
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center border-2" style={{ backgroundColor: 'var(--color-secondary)40', borderColor: 'var(--color-primary)' }}>
-            <span className="text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
+      <div className="flex items-start justify-between gap-3 mb-3.5">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#00485C] border border-[#34A8A6]/40 flex-shrink-0 shadow-sm">
+            <span className="text-sm font-black text-white">
               {order.client_name?.charAt(0)?.toUpperCase() || 'C'}
             </span>
           </div>
-          <div>
-            <h4 className="font-semibold text-[#333333] text-sm">{order.client_name || 'Cliente'}</h4>
-            <div className="flex items-center gap-1 text-gray-400 text-xs">
-              <Calendar className="w-3 h-3" strokeWidth={1.5} />
+          <div className="min-w-0">
+            <h4 className="font-bold text-white text-sm sm:text-base truncate group-hover:text-[#4BCBB4] transition-colors">
+              {order.client_name || 'Cliente'}
+            </h4>
+            <div className="flex items-center gap-1.5 text-[#A3D2DF] text-xs mt-0.5">
+              <Calendar className="w-3.5 h-3.5 text-[#8EB3BD]" strokeWidth={1.5} />
               <span>{formatDate(order.order_date)}</span>
+              {order.id && (
+                <span className="text-[10px] text-[#6E9AA6]">· #{order.id.slice(-6).toUpperCase()}</span>
+              )}
             </div>
           </div>
         </div>
-        <span 
-          className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.status]}`}
-          style={getStatusStyle(order.status)}
-        >
+        
+        <span className={`px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider border flex-shrink-0 ${getStatusBadge(order.status)}`}>
           {order.status}
         </span>
       </div>
 
-      <div className="flex items-center justify-between">
-        <p className="text-lg font-bold text-[#333333]">
-          R$ {(order.total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-        </p>
+      <div className="flex items-center justify-between gap-2 pt-3 border-t border-[#1C4156]/60">
+        <div>
+          <span className="text-[10px] uppercase font-bold tracking-wider text-[#8EB3BD] block">Total</span>
+          <p className="text-base sm:text-lg font-black text-[#4BCBB4] tracking-tight">
+            R$ {(order.total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </p>
+        </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
           {order.status === 'Orçamento' && (
             <button
-              onClick={(e) => { e.stopPropagation(); onApprove?.(order); }}
-              style={{ backgroundColor: 'var(--color-primary)' }}
-              className="flex items-center gap-1 px-3 py-1.5 text-white text-xs font-medium rounded-full hover:opacity-90 transition-opacity"
+              onClick={() => onApprove?.(order)}
+              title="Aprovar Orçamento"
+              className="flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 text-xs font-bold rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-sm"
             >
-              <Check className="w-3 h-3" />
-              Aprovar
+              <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
+              <span className="hidden xs:inline">Aprovar</span>
             </button>
           )}
           
           {(order.status === 'Concluído' || order.status === 'Orçamento') && (
             <button
-              onClick={(e) => { e.stopPropagation(); onGenerateReceipt?.(order); }}
-              style={{ backgroundColor: 'var(--color-secondary)40', color: 'var(--color-primary)' }}
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full hover:opacity-90 transition-opacity"
+              onClick={() => onGenerateReceipt?.(order)}
+              title={order.status === 'Orçamento' ? 'Ver Orçamento' : 'Emitir Recibo'}
+              className="flex items-center gap-1 px-3 py-1.5 bg-[#133345] border border-[#1C4156] text-white hover:border-[#34A8A6] text-xs font-semibold rounded-xl active:scale-95 transition-all"
             >
-              <FileText className="w-3 h-3" />
-              {order.status === 'Orçamento' ? 'Ver' : 'Recibo'}
+              <FileText className="w-3.5 h-3.5 text-[#4BCBB4]" strokeWidth={2} />
+              <span>{order.status === 'Orçamento' ? 'Ver' : 'Recibo'}</span>
             </button>
           )}
           
           <button
-            onClick={(e) => { e.stopPropagation(); onShare?.(order); }}
-            className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition-colors"
+            onClick={() => onShare?.(order)}
+            title="Compartilhar no WhatsApp"
+            className="w-8 h-8 rounded-xl bg-[#081924] border border-[#1C4156] flex items-center justify-center text-[#A3D2DF] hover:text-white hover:border-[#34A8A6] transition-all"
           >
-            <Share2 className="w-4 h-4 text-gray-500" strokeWidth={1.5} />
+            <Share2 className="w-3.5 h-3.5" strokeWidth={2} />
           </button>
           
-          <ChevronRight className="w-5 h-5 text-gray-300" />
+          <div className="text-[#6E9AA6] group-hover:text-white transition-colors pl-0.5">
+            <ChevronRight className="w-4 h-4" />
+          </div>
         </div>
       </div>
     </motion.div>

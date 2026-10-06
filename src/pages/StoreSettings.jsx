@@ -115,26 +115,29 @@ export default function StoreSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-[#E5F3F7] pb-12">
       {/* Header */}
-      <div className="bg-white px-5 pt-12 pb-6 shadow-sm">
-        <div className="flex items-center justify-between">
+      <div className="bg-[#0D222E] border-b border-[#1C4156] px-4 sm:px-6 lg:px-8 pt-8 pb-5 shadow-sm">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
           <button
             onClick={() => navigate(createPageUrl('Catalog'))}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-white"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+            <ArrowLeft className="w-5 h-5" strokeWidth={2} />
           </button>
-          <h1 className="text-lg font-bold text-[#333333]">Loja Online</h1>
+          <div className="text-center">
+            <h1 className="text-lg sm:text-xl font-black text-white">Configurar Loja Online</h1>
+            <p className="text-xs text-[#A3D2DF]">Catálogo público para pedidos no WhatsApp</p>
+          </div>
           <div className="w-10" />
         </div>
       </div>
 
       {/* Form */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-5 py-6 space-y-4"
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4"
       >
         {/* Store Status */}
         <div className="bg-white rounded-[20px] p-4 shadow-sm">

@@ -73,7 +73,7 @@ export default function Catalog() {
   });
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-[#E5F3F7] pb-12">
       {/* Pull-to-refresh indicator */}
       {(pullDistance > 0 || isRefreshing) && (
         <div
@@ -81,129 +81,140 @@ export default function Catalog() {
           style={{ height: isRefreshing ? 44 : pullDistance * 0.55 }}
         >
           <RefreshCw
-            className={`w-5 h-5 text-[#2d91a8] ${isRefreshing ? 'animate-spin' : ''}`}
+            className={`w-5 h-5 text-[#34A8A6] ${isRefreshing ? 'animate-spin' : ''}`}
             style={{ opacity: Math.min(pullDistance / 80, 1) }}
           />
         </div>
       )}
       {/* Header */}
-      <div className="bg-white px-5 pt-12 pb-4 shadow-sm">
-        <div className="flex items-center justify-between mb-4">
-            <h1 className="text-xl font-bold text-[#333333]">Catálogo</h1>
-            <div className="flex gap-2">
+      <div className="bg-[#0D222E] border-b border-[#1C4156] px-4 sm:px-6 lg:px-8 pt-8 pb-5 shadow-sm">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-white">Catálogo</h1>
+              <p className="text-xs text-[#A3D2DF]">Gerencie seus produtos e serviços</p>
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
               {/* View Mode Toggle */}
-              <div className="flex gap-1 bg-gray-100 rounded-full p-1">
+              <div className="flex items-center gap-1 bg-[#081924] border border-[#1C4156] rounded-xl p-1">
                 <button
+                  type="button"
                   onClick={() => handleViewModeChange('grid')}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-                    viewMode === 'grid' ? 'bg-white shadow-sm' : ''
+                  title="Visualização em Grade"
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                    viewMode === 'grid' ? 'bg-[#00485C] text-white shadow-sm' : 'text-[#8EB3BD] hover:text-white'
                   }`}
                 >
-                  <Grid3x3 className={`w-4 h-4 ${viewMode === 'grid' ? 'text-[#2d91a8]' : 'text-gray-400'}`} strokeWidth={2} />
+                  <Grid3x3 className="w-4 h-4" strokeWidth={2} />
                 </button>
                 <button
+                  type="button"
                   onClick={() => handleViewModeChange('list')}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-                    viewMode === 'list' ? 'bg-white shadow-sm' : ''
+                  title="Visualização em Lista"
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                    viewMode === 'list' ? 'bg-[#00485C] text-white shadow-sm' : 'text-[#8EB3BD] hover:text-white'
                   }`}
                 >
-                  <List className={`w-4 h-4 ${viewMode === 'list' ? 'text-[#2d91a8]' : 'text-gray-400'}`} strokeWidth={2} />
+                  <List className="w-4 h-4" strokeWidth={2} />
                 </button>
               </div>
 
               <button
+                type="button"
                 onClick={handlePublishStore}
-                style={{ backgroundColor: primaryColor }}
-                className="h-10 px-4 rounded-full flex items-center justify-center gap-2 shadow-lg"
+                className="h-9 sm:h-10 px-3.5 rounded-xl flex items-center justify-center gap-2 bg-[#133345] border border-[#1C4156] text-white hover:border-[#34A8A6] transition-all text-xs sm:text-sm font-semibold shadow-sm"
               >
-                <Globe className="w-4 h-4 text-white" strokeWidth={2} />
-                <span className="text-sm font-medium text-white">Loja Online</span>
+                <Globe className="w-4 h-4 text-[#4BCBB4]" strokeWidth={2} />
+                <span>Loja Online</span>
               </button>
+
               <Link
                 to={createPageUrl('CatalogForm')}
-                style={{ backgroundColor: primaryColor }}
-                className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
+                className="h-9 sm:h-10 px-3.5 rounded-xl flex items-center justify-center gap-1.5 bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold text-xs sm:text-sm shadow-md hover:brightness-110 active:scale-95 transition-all"
               >
-                <Plus className="w-5 h-5 text-white" strokeWidth={2} />
+                <Plus className="w-4 h-4" strokeWidth={2.5} />
+                <span className="hidden xs:inline">Adicionar</span>
               </Link>
             </div>
           </div>
 
-        {/* Search */}
-        <div className="relative mb-4">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" strokeWidth={1.5} />
-          <input
-            type="text"
-            placeholder="Buscar produtos ou serviços..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-[#F9F9F9] rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#2d91a8]/20"
-          />
-        </div>
+          {/* Search */}
+          <div className="relative mb-3.5">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8EB3BD]" strokeWidth={2} />
+            <input
+              type="text"
+              placeholder="Buscar produtos ou serviços..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-[#081924] border border-[#1C4156] text-white placeholder-[#6E9AA6] rounded-xl text-sm focus:outline-none focus:border-[#34A8A6] transition-colors"
+            />
+          </div>
 
-        {/* Filter Buttons */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => setFilter('all')}
-            style={filter === 'all' ? { backgroundColor: primaryColor } : {}}
-            className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${
-              filter === 'all'
-                ? 'text-white'
-                : 'bg-gray-100 text-gray-500'
-            }`}
-          >
-            Todos
-          </button>
-          <button
-            onClick={() => setFilter('product')}
-            style={filter === 'product' ? { backgroundColor: primaryColor } : {}}
-            className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${
-              filter === 'product'
-                ? 'text-white'
-                : 'bg-gray-100 text-gray-500'
-            }`}
-          >
-            <Package className="w-4 h-4" strokeWidth={1.5} />
-            Produtos
-          </button>
-          <button
-            onClick={() => setFilter('service')}
-            style={filter === 'service' ? { backgroundColor: primaryColor } : {}}
-            className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${
-              filter === 'service'
-                ? 'text-white'
-                : 'bg-gray-100 text-gray-500'
-            }`}
-          >
-            <Wrench className="w-4 h-4" strokeWidth={1.5} />
-            Serviços
-          </button>
-          <button
-            onClick={() => navigate(createPageUrl('CategoryManager'))}
-            className="py-2.5 px-4 rounded-xl text-sm font-medium bg-purple-100 text-purple-700"
-          >
-            Categorias
-          </button>
+          {/* Filter Buttons with safe horizontal scroll to avoid page overflow */}
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide no-scrollbar -mx-1 px-1">
+            <button
+              onClick={() => setFilter('all')}
+              className={`py-2 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex-shrink-0 whitespace-nowrap ${
+                filter === 'all'
+                  ? 'bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold shadow-md'
+                  : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+              }`}
+            >
+              Todos ({items.length})
+            </button>
+            <button
+              onClick={() => setFilter('product')}
+              className={`py-2 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap ${
+                filter === 'product'
+                  ? 'bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold shadow-md'
+                  : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+              }`}
+            >
+              <Package className="w-3.5 h-3.5" strokeWidth={2} />
+              Produtos
+            </button>
+            <button
+              onClick={() => setFilter('service')}
+              className={`py-2 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap ${
+                filter === 'service'
+                  ? 'bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold shadow-md'
+                  : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+              }`}
+            >
+              <Wrench className="w-3.5 h-3.5" strokeWidth={2} />
+              Serviços
+            </button>
+            <button
+              onClick={() => navigate(createPageUrl('CategoryManager'))}
+              className="py-2 px-4 rounded-xl text-xs sm:text-sm font-semibold bg-[#133345] text-[#A3D2DF] border border-[#1C4156] hover:text-white transition-all flex-shrink-0 whitespace-nowrap"
+            >
+              Categorias
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Catalog Grid */}
-      <div className="px-5 py-4">
+      {/* Catalog Grid / List */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <AnimatePresence mode="popLayout">
           {isLoading ? (
-            <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="bg-white rounded-[20px] overflow-hidden animate-pulse">
-                  <div className="w-full h-32 bg-gray-200" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} className="bg-[#0D222E] border border-[#1C4156] rounded-2xl overflow-hidden animate-pulse">
+                  <div className="w-full h-32 bg-[#133345]" />
                   <div className="p-4 space-y-2">
-                    <div className="w-3/4 h-4 bg-gray-200 rounded" />
-                    <div className="w-1/2 h-5 bg-gray-200 rounded" />
+                    <div className="w-3/4 h-4 bg-[#133345] rounded" />
+                    <div className="w-1/2 h-5 bg-[#133345] rounded" />
                   </div>
                 </div>
               ))}
             </div>
           ) : filteredItems.length > 0 ? (
-            <div className={viewMode === 'grid' ? 'grid grid-cols-2 gap-4' : 'space-y-3'}>
+            <div className={viewMode === 'grid' 
+              ? 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5' 
+              : 'grid grid-cols-1 md:grid-cols-2 gap-4'
+            }>
               {filteredItems.map(item => (
                 <CatalogCard
                   key={item.id}
@@ -217,12 +228,13 @@ export default function Catalog() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-white rounded-[20px] p-12 text-center"
+              className="bg-[#0D222E] border border-[#1C4156] rounded-2xl p-12 text-center"
             >
-              <div className="w-16 h-16 bg-[#52cfc1]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Package className="w-8 h-8 text-[#2d91a8]/40" strokeWidth={1.5} />
+              <div className="w-16 h-16 bg-[#34A8A6]/10 border border-[#34A8A6]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Package className="w-8 h-8 text-[#4BCBB4]" strokeWidth={1.5} />
               </div>
-              <p className="text-gray-400">Nenhum item encontrado</p>
+              <h3 className="font-bold text-white mb-1">Nenhum item encontrado</h3>
+              <p className="text-sm text-[#A3D2DF]">Tente ajustar a busca ou adicionar novos itens ao catálogo.</p>
             </motion.div>
           )}
         </AnimatePresence>

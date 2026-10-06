@@ -69,7 +69,7 @@ export default function Financial() {
   const estimatedProfit = currentMonthData.profit;
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-[#E5F3F7] pb-12">
       {/* Pull-to-refresh indicator */}
       {(pullDistance > 0 || isRefreshing) && (
         <div
@@ -77,162 +77,173 @@ export default function Financial() {
           style={{ height: isRefreshing ? 44 : pullDistance * 0.55 }}
         >
           <RefreshCw
-            className={`w-5 h-5 text-[#2d91a8] ${isRefreshing ? 'animate-spin' : ''}`}
+            className={`w-5 h-5 text-[#34A8A6] ${isRefreshing ? 'animate-spin' : ''}`}
             style={{ opacity: Math.min(pullDistance / 80, 1) }}
           />
         </div>
       )}
       {/* Header */}
-      <div className="bg-white px-5 pt-12 pb-6 rounded-b-[32px] shadow-sm">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-bold text-[#333333]">Financeiro</h1>
-          <Link
-            to={createPageUrl('FinancialForm')}
-            style={{ backgroundColor: 'var(--color-primary)' }}
-            className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
-          >
-            <Plus className="w-5 h-5 text-white" strokeWidth={2} />
-          </Link>
-        </div>
+      <div className="bg-[#0D222E] border-b border-[#1C4156] px-4 sm:px-6 lg:px-8 pt-8 pb-6 shadow-sm">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-white">Controle Financeiro</h1>
+              <p className="text-xs text-[#A3D2DF]">Fluxo de caixa, receitas e despesas</p>
+            </div>
+            
+            <div className="flex items-center gap-3 self-start sm:self-auto">
+              {/* Month Selector */}
+              <div className="flex items-center gap-2 bg-[#081924] border border-[#1C4156] rounded-xl px-2 py-1">
+                <button
+                  type="button"
+                  onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-[#A3D2DF] hover:text-white hover:bg-white/5 transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs sm:text-sm font-bold text-white min-w-[120px] text-center capitalize">
+                  {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-[#A3D2DF] hover:text-white hover:bg-white/5 transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
 
-        {/* Month Selector */}
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <button
-            onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          <span className="text-lg font-semibold text-[#333333] min-w-[140px] text-center capitalize">
-            {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}
-          </span>
-          <button
-            onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5 text-gray-600" />
-          </button>
-        </div>
+              <Link
+                to={createPageUrl('FinancialForm')}
+                className="h-10 px-4 rounded-xl flex items-center justify-center gap-2 bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold text-xs sm:text-sm shadow-md hover:brightness-110 active:scale-95 transition-all"
+              >
+                <Plus className="w-4 h-4" strokeWidth={2.5} />
+                <span>Lançamento</span>
+              </Link>
+            </div>
+          </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            onClick={() => navigate(createPageUrl('FinancialList?type=income'))}
-            className="bg-green-50 rounded-[16px] p-4 text-center cursor-pointer hover:bg-green-100 transition-colors"
-          >
-            <ArrowUpRight className="w-5 h-5 text-green-600 mx-auto mb-1" strokeWidth={1.5} />
-            <p className="text-xs text-gray-500 mb-1">Receitas</p>
-            <p className="text-sm font-bold text-green-600">
-              R$ {totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            onClick={() => navigate(createPageUrl('FinancialList?type=expense'))}
-            className="bg-red-50 rounded-[16px] p-4 text-center cursor-pointer hover:bg-red-100 transition-colors"
-          >
-            <ArrowDownRight className="w-5 h-5 text-red-500 mx-auto mb-1" strokeWidth={1.5} />
-            <p className="text-xs text-gray-500 mb-1">Despesas</p>
-            <p className="text-sm font-bold text-red-500">
-              R$ {totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className={`rounded-[16px] p-4 text-center`}
-            style={estimatedProfit >= 0 ? { backgroundColor: 'var(--color-primary)10' } : {}}
-          >
-            <TrendingUp 
-              className={`w-5 h-5 mx-auto mb-1 ${estimatedProfit >= 0 ? '' : 'text-amber-600'}`}
-              style={estimatedProfit >= 0 ? { color: 'var(--color-primary)' } : {}}
-              strokeWidth={1.5} 
-            />
-            <p className="text-xs text-gray-500 mb-1">Lucro</p>
-            <p 
-              className={`text-sm font-bold ${estimatedProfit >= 0 ? '' : 'text-amber-600'}`}
-              style={estimatedProfit >= 0 ? { color: 'var(--color-primary)' } : {}}
+          {/* Summary Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              onClick={() => navigate(createPageUrl('FinancialList?type=income'))}
+              className="bg-[#081924] border border-emerald-900/40 hover:border-emerald-500/50 rounded-2xl p-4 text-center cursor-pointer transition-all shadow-sm group"
             >
-              R$ {estimatedProfit.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            </p>
-          </motion.div>
-        </div>
+              <div className="w-9 h-9 rounded-xl bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center mx-auto mb-2 text-emerald-400 group-hover:scale-105 transition-transform">
+                <ArrowUpRight className="w-5 h-5" strokeWidth={2} />
+              </div>
+              <p className="text-xs font-semibold text-[#8EB3BD] mb-1">Receitas</p>
+              <p className="text-base sm:text-lg font-black text-emerald-400">
+                R$ {totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+              </p>
+            </motion.div>
 
-        {/* Profit Comparison */}
-        <div className="bg-white rounded-[16px] p-4 border border-gray-100">
-          <p className="text-xs text-gray-500 font-medium mb-3">Comparação de Lucro</p>
-          <div className="flex items-center justify-between gap-2">
-            <div className="text-center flex-1">
-              <p className="text-[10px] text-gray-400 mb-1">Mês Anterior</p>
-              <p className={`text-sm font-bold ${previousMonth.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                R$ {Math.abs(previousMonth.profit).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              onClick={() => navigate(createPageUrl('FinancialList?type=expense'))}
+              className="bg-[#081924] border border-rose-900/40 hover:border-rose-500/50 rounded-2xl p-4 text-center cursor-pointer transition-all shadow-sm group"
+            >
+              <div className="w-9 h-9 rounded-xl bg-rose-950/60 border border-rose-800/40 flex items-center justify-center mx-auto mb-2 text-rose-400 group-hover:scale-105 transition-transform">
+                <ArrowDownRight className="w-5 h-5" strokeWidth={2} />
+              </div>
+              <p className="text-xs font-semibold text-[#8EB3BD] mb-1">Despesas</p>
+              <p className="text-base sm:text-lg font-black text-rose-400">
+                R$ {totalExpenses.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </p>
-            </div>
-            <div className="text-center flex-1 px-2 border-x border-gray-100">
-              <p className="text-[10px] text-gray-400 mb-1">Mês Atual</p>
-              <p 
-                className={`text-lg font-bold ${estimatedProfit >= 0 ? '' : 'text-amber-600'}`}
-                style={estimatedProfit >= 0 ? { color: 'var(--color-primary)' } : {}}
-              >
-                R$ {Math.abs(estimatedProfit).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-[#081924] border border-[#1C4156] rounded-2xl p-4 text-center shadow-sm"
+            >
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-2 border ${
+                estimatedProfit >= 0 
+                  ? 'bg-teal-950/60 border-[#34A8A6]/40 text-[#4BCBB4]' 
+                  : 'bg-amber-950/60 border-amber-800/40 text-amber-400'
+              }`}>
+                <TrendingUp className="w-5 h-5" strokeWidth={2} />
+              </div>
+              <p className="text-xs font-semibold text-[#8EB3BD] mb-1">Resultado Líquido</p>
+              <p className={`text-base sm:text-lg font-black ${estimatedProfit >= 0 ? 'text-[#4BCBB4]' : 'text-amber-400'}`}>
+                R$ {estimatedProfit.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </p>
-            </div>
-            <div className="text-center flex-1">
-              <p className="text-[10px] text-gray-400 mb-1">Próximo Mês</p>
-              <p 
-                className={`text-sm font-bold ${nextMonth.profit >= 0 ? '' : 'text-gray-400'}`}
-                style={nextMonth.profit >= 0 ? { color: 'var(--color-primary)' } : {}}
-              >
-                R$ {Math.abs(nextMonth.profit).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
-              </p>
+            </motion.div>
+          </div>
+
+          {/* Profit Comparison Horizontal Bar */}
+          <div className="bg-[#081924] rounded-2xl p-4 border border-[#1C4156]">
+            <p className="text-xs font-bold text-[#A3D2DF] uppercase tracking-wider mb-3">Comparativo de Períodos</p>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="text-center">
+                <p className="text-[10px] text-[#8EB3BD] mb-0.5">Mês Anterior</p>
+                <p className={`text-xs sm:text-sm font-bold ${previousMonth.profit >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                  R$ {Math.abs(previousMonth.profit).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                </p>
+              </div>
+              <div className="text-center border-x border-[#1C4156] px-2">
+                <p className="text-[10px] text-[#A3D2DF] font-bold mb-0.5">Mês Atual</p>
+                <p className={`text-sm sm:text-base font-black ${estimatedProfit >= 0 ? 'text-[#4BCBB4]' : 'text-amber-400'}`}>
+                  R$ {Math.abs(estimatedProfit).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                </p>
+              </div>
+              <div className="text-center">
+                <p className="text-[10px] text-[#8EB3BD] mb-0.5">Próximo Mês</p>
+                <p className={`text-xs sm:text-sm font-bold ${nextMonth.profit >= 0 ? 'text-emerald-400' : 'text-[#8EB3BD]'}`}>
+                  R$ {Math.abs(nextMonth.profit).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Transactions List */}
-      <div className="px-5 py-4 space-y-3">
-        <h2 className="text-sm font-semibold text-gray-500 mb-2">Movimentações</h2>
+      {/* Transactions List - 2 Columns on Desktop */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-base font-extrabold text-white">Movimentações do Mês ({monthlyFinancials.length})</h2>
+        </div>
         
         <AnimatePresence mode="popLayout">
           {isLoading ? (
-            <div className="space-y-3">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="bg-white rounded-[16px] p-4 animate-pulse flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-200" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="bg-[#0D222E] border border-[#1C4156] rounded-2xl p-4 animate-pulse flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#133345]" />
                   <div className="flex-1 space-y-2">
-                    <div className="w-24 h-4 bg-gray-200 rounded" />
-                    <div className="w-16 h-3 bg-gray-100 rounded" />
+                    <div className="w-24 h-4 bg-[#133345] rounded" />
+                    <div className="w-16 h-3 bg-[#133345] rounded" />
                   </div>
-                  <div className="w-20 h-4 bg-gray-200 rounded" />
+                  <div className="w-20 h-5 bg-[#133345] rounded" />
                 </div>
               ))}
             </div>
           ) : monthlyFinancials.length > 0 ? (
-            monthlyFinancials.map(item => (
-              <FinancialRow
-                key={item.id}
-                item={item}
-                onClick={() => navigate(createPageUrl(`FinancialForm?id=${item.id}`))}
-              />
-            ))
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+              {monthlyFinancials.map(item => (
+                <FinancialRow
+                  key={item.id}
+                  item={item}
+                  onClick={() => navigate(createPageUrl(`FinancialForm?id=${item.id}`))}
+                />
+              ))}
+            </div>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-white rounded-[20px] p-12 text-center"
+              className="bg-[#0D222E] border border-[#1C4156] rounded-2xl p-12 text-center"
             >
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'var(--color-secondary)20' }}>
-                <TrendingUp className="w-8 h-8" style={{ color: 'var(--color-primary)66' }} strokeWidth={1.5} />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-[#081924] border border-[#1C4156]">
+                <TrendingUp className="w-8 h-8 text-[#4BCBB4]" strokeWidth={1.5} />
               </div>
-              <p className="text-gray-400">Nenhuma movimentação neste mês</p>
+              <h3 className="font-bold text-white mb-1">Nenhuma movimentação neste mês</h3>
+              <p className="text-sm text-[#A3D2DF]">Adicione receitas ou despesas para acompanhar o fluxo de caixa.</p>
             </motion.div>
           )}
         </AnimatePresence>

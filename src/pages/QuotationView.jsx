@@ -61,8 +61,8 @@ export default function QuotationView() {
     
     try {
       const canvas = await html2canvas(contentRef.current, {
-        scale: 2,
-        backgroundColor: '#FAFAFA',
+        scale: 3,
+        backgroundColor: '#FFFFFF',
         logging: false,
         useCORS: true,
         allowTaint: true,
@@ -83,8 +83,8 @@ export default function QuotationView() {
     
     try {
       const canvas = await html2canvas(contentRef.current, {
-        scale: 2,
-        backgroundColor: '#FAFAFA',
+        scale: 3,
+        backgroundColor: '#FFFFFF',
         logging: false,
         useCORS: true,
         allowTaint: true,
@@ -98,7 +98,7 @@ export default function QuotationView() {
             await navigator.share({
               files: [file],
               title: 'Orçamento',
-              text: 'Orçamento'
+              text: 'Orçamento gerado por xelfy'
             });
             setIsDownloading(false);
             return;
@@ -110,47 +110,36 @@ export default function QuotationView() {
           }
         }
         
-        const { file_url } = await base44.integrations.Core.UploadFile({ file });
-        const url = `https://wa.me/?text=${encodeURIComponent(file_url)}`;
-        window.open(url, '_blank');
+        // Direct download fallback
+        const link = document.createElement('a');
+        link.download = `orcamento-${order.id?.slice(-8)}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
         setIsDownloading(false);
       });
-    } catch (error) {
+    } catch (_) {
       setIsDownloading(false);
     }
   };
 
-  const handleShare = async () => {
-    const text = generateOrderWhatsAppMessage(order, settings[0] || {});
-    
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          text: text,
-          title: 'Orçamento'
-        });
-        return;
-      } catch (err) {
-        if (err.name === 'AbortError') return;
-      }
-    }
-    
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-  };
-
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#4A5D23] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#07151D] flex items-center justify-center">
+        <div className="w-8 h-8 border-3 border-[#00485C] border-t-[#4BCBB4] rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
-        <p className="text-gray-400">Orçamento não encontrado</p>
+      <div className="min-h-screen bg-[#07151D] flex flex-col items-center justify-center gap-3">
+        <p className="text-white font-semibold">Orçamento não encontrado</p>
+        <button
+          onClick={() => navigate(-1)}
+          className="px-4 py-2 bg-[#00485C] text-white rounded-xl text-xs font-bold"
+        >
+          Voltar
+        </button>
       </div>
     );
   }
@@ -159,193 +148,251 @@ export default function QuotationView() {
   const validUntil = order.order_date ? addDays(new Date(order.order_date), 15) : null;
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-white pb-20">
       {/* Header - Hidden on print */}
-      <div className="bg-white px-5 pt-12 pb-6 shadow-sm print:hidden">
-        <div className="flex items-center justify-between">
+      <div className="bg-[#0D222E] border-b border-[#1C4156] px-5 pt-10 pb-5 shadow-sm print:hidden">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-white"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+            <ArrowLeft className="w-5 h-5" strokeWidth={2} />
           </button>
-          <h1 className="text-lg font-bold text-[#333333]">Orçamento</h1>
-          <button
-            onClick={handlePrint}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
-          >
-            <Printer className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
-          </button>
+          <div className="text-center">
+            <h1 className="text-lg font-bold text-white">Visualização de Orçamento</h1>
+            <p className="text-xs text-[#8EB3BD]">Pronto para envio ou impressão</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrint}
+              title="Imprimir"
+              className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-white"
+            >
+              <Printer className="w-5 h-5" strokeWidth={2} />
+            </button>
+            <button
+              onClick={handleShareImage}
+              title="Compartilhar imagem"
+              disabled={isDownloading}
+              className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 flex items-center justify-center transition-transform active:scale-95 shadow-md shadow-teal-950/40"
+            >
+              <Share2 className="w-5 h-5 stroke-[2.5]" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Receipt Content */}
+      {/* Quotation Document - Always crisp white paper background for 100% readability */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl mx-auto px-5 py-6"
+        className="max-w-2xl mx-auto px-4 sm:px-6 py-6"
       >
-        <div ref={contentRef} className="bg-white rounded-[20px] shadow-lg overflow-hidden print:shadow-none">
-          {/* Company Header */}
-          {companySettings.company_cover && (
-            <div className="h-24 bg-gradient-to-br from-[#4A5D23] to-[#6b7f3a] relative overflow-hidden">
-              <img src={companySettings.company_cover} alt="Capa" className="w-full h-full object-cover" crossOrigin="anonymous" />
-            </div>
-          )}
-
-          <div className="p-6 border-b">
-            <div className="flex items-center gap-4 mb-6">
-              {companySettings.company_logo && (
-                <div className="w-20 h-20 rounded-full overflow-hidden bg-white shadow-md flex-shrink-0">
-                  <img src={companySettings.company_logo} alt="Logo" className="w-full h-full object-contain" crossOrigin="anonymous" />
+        <div 
+          ref={contentRef} 
+          className="quotation-paper bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden print:shadow-none border border-slate-200"
+          style={{ backgroundColor: '#FFFFFF', color: '#0F172A' }}
+        >
+          {/* Header Banner */}
+          <div className="bg-[#00485C] text-white p-6 border-b border-[#0A3342]">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4 min-w-0">
+                {companySettings.company_logo ? (
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-white p-1 shadow-md flex-shrink-0">
+                    <img src={companySettings.company_logo} alt="Logo" className="w-full h-full object-contain" crossOrigin="anonymous" />
+                  </div>
+                ) : (
+                  <div className="w-14 h-14 rounded-xl bg-white/15 border border-white/30 p-1 flex items-center justify-center flex-shrink-0">
+                    <img src="/logo.png" alt="xelfy" className="w-full h-full object-contain" />
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <h2 className="text-xl font-black text-white tracking-tight truncate">
+                    {companySettings.company_name || user?.full_name || 'xelfy Negócios'}
+                  </h2>
+                  {companySettings.company_phone && (
+                    <p className="text-xs text-teal-100 font-medium">WhatsApp / Tel: {companySettings.company_phone}</p>
+                  )}
+                  {companySettings.company_email && (
+                    <p className="text-xs text-teal-100">{companySettings.company_email}</p>
+                  )}
                 </div>
-              )}
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-[#333333] mb-1">
-                  {companySettings.company_name || user?.full_name || 'Minha Empresa'}
-                </h2>
-                {companySettings.company_phone && (
-                  <p className="text-sm text-gray-500">{companySettings.company_phone}</p>
-                )}
-                {companySettings.company_email && (
-                  <p className="text-sm text-gray-500">{companySettings.company_email}</p>
-                )}
+              </div>
+
+              <div className="text-right flex-shrink-0">
+                <span className="inline-block px-3 py-1 bg-white text-[#00485C] font-black text-xs uppercase tracking-widest rounded-lg shadow-sm">
+                  ORÇAMENTO
+                </span>
+                <p className="text-xs text-teal-100 font-semibold mt-1">
+                  #{order.id?.slice(-8).toUpperCase()}
+                </p>
               </div>
             </div>
-            
-            <h3 className="text-xl font-bold text-[#333333] text-center mb-4">ORÇAMENTO</h3>
           </div>
 
-          {/* Order Info */}
-          <div className="p-6 border-b bg-gray-50">
-            <div className="grid grid-cols-2 gap-4 text-sm">
+          {/* Client & Metadata Info */}
+          <div className="bg-slate-50 p-5 border-b border-slate-200">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <p className="text-gray-500 mb-1">Cliente</p>
-                <p className="font-semibold text-[#333333]">{client?.company || client?.name || order.client_name || '-'}</p>
+                <span className="block text-slate-500 font-semibold uppercase tracking-wider text-[10px] mb-0.5">Cliente</span>
+                <p className="font-bold text-slate-900 text-sm">
+                  {client?.company || client?.name || order.client_name || 'Cliente'}
+                </p>
+                {client?.whatsapp && (
+                  <p className="text-slate-500 text-[11px] mt-0.5">{client.whatsapp}</p>
+                )}
               </div>
               <div>
-                <p className="text-gray-500 mb-1">Data</p>
-                <p className="font-semibold text-[#333333]">
-                  {order.order_date ? format(new Date(order.order_date), "dd/MM/yyyy", { locale: ptBR }) : '-'}
+                <span className="block text-slate-500 font-semibold uppercase tracking-wider text-[10px] mb-0.5">Data de Emissão</span>
+                <p className="font-bold text-slate-900 text-sm">
+                  {order.order_date ? format(new Date(order.order_date), "dd/MM/yyyy", { locale: ptBR }) : format(new Date(), "dd/MM/yyyy")}
                 </p>
               </div>
               <div>
-                <p className="text-gray-500 mb-1">Nº do Orçamento</p>
-                <p className="font-semibold text-[#333333]">#{order.id?.slice(-8).toUpperCase()}</p>
+                <span className="block text-slate-500 font-semibold uppercase tracking-wider text-[10px] mb-0.5">Validade da Proposta</span>
+                <p className="font-bold text-[#00485C] text-sm">
+                  {validUntil ? format(validUntil, "dd/MM/yyyy", { locale: ptBR }) : '15 dias'}
+                </p>
               </div>
-              {validUntil && (
-                <div>
-                  <p className="text-gray-500 mb-1">Validade</p>
-                  <p className="font-semibold text-[#333333]">
-                    {format(validUntil, "dd/MM/yyyy", { locale: ptBR })}
-                  </p>
-                </div>
-              )}
             </div>
           </div>
 
-          {/* Items */}
+          {/* Items Section */}
           <div className="p-6">
-            <h4 className="font-semibold text-[#333333] mb-4">Itens do Orçamento</h4>
-            <div className="space-y-3">
-              {order.items?.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-start p-3 bg-gray-50 rounded-xl">
-                  <div className="flex-1">
-                    <p className="font-medium text-[#333333]">{item.name}</p>
-                    <p className="text-sm text-gray-500">
-                      {item.quantity}x R$ {item.unit_price?.toFixed(2)}
-                    </p>
+            <h4 className="text-xs font-black uppercase tracking-wider text-slate-500 mb-3">
+              Itens do Orçamento
+            </h4>
+            <div className="space-y-2.5">
+              {order.items && order.items.length > 0 ? (
+                order.items.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center p-3 bg-slate-50 border border-slate-200/90 rounded-xl">
+                    <div className="flex-1 pr-3">
+                      <p className="font-bold text-slate-900 text-sm">{item.name}</p>
+                      <p className="text-xs text-slate-500 font-medium">
+                        {item.quantity} {item.unit || 'un'} × R$ {(item.unit_price || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                      </p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <span className="text-base font-black text-[#00485C]">
+                        R$ {(item.total || ((item.quantity || 1) * (item.unit_price || 0))).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                      </span>
+                    </div>
                   </div>
-                  <p className="font-semibold text-[#4A5D23]">
-                    R$ {item.total?.toFixed(2)}
-                  </p>
+                ))
+              ) : (
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center">
+                  <span className="font-bold text-slate-900">Serviços / Produtos</span>
+                  <span className="font-black text-[#00485C]">R$ {(order.total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
-              ))}
-            </div>
+              )}
             </div>
 
-            {/* Notes */}
+            {/* Notes if present */}
             {order.notes && (
-            <div className="p-6 border-t bg-gray-50">
-              <h4 className="font-semibold text-[#333333] mb-2">Observações</h4>
-              <p className="text-sm text-gray-600 whitespace-pre-wrap">{order.notes}</p>
-            </div>
+              <div className="mt-4 p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                <h5 className="font-bold text-slate-900 text-xs mb-1">Observações do Pedido:</h5>
+                <p className="text-xs text-slate-600 whitespace-pre-wrap leading-relaxed">{order.notes}</p>
+              </div>
             )}
 
-            {/* Totals */}
-          <div className="p-6 border-t">
-            <div className="space-y-2">
-              <div className="flex justify-between text-gray-600">
-                <span>Subtotal</span>
-                <span>R$ {order.subtotal?.toFixed(2)}</span>
+            {/* Totals Box */}
+            <div className="mt-6 pt-4 border-t-2 border-slate-200 space-y-2">
+              <div className="flex justify-between text-xs text-slate-600 font-medium">
+                <span>Subtotal dos Itens:</span>
+                <span className="text-slate-900 font-bold">
+                  R$ {(order.subtotal || order.total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </span>
               </div>
               {order.discount > 0 && (
-                <div className="flex justify-between text-gray-600">
-                  <span>Desconto</span>
-                  <span>-R$ {order.discount?.toFixed(2)}</span>
+                <div className="flex justify-between text-xs text-emerald-600 font-bold">
+                  <span>Desconto Aplicado:</span>
+                  <span>-R$ {order.discount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
               )}
-              <div className="flex justify-between text-xl font-bold text-[#333333] pt-2 border-t">
-                <span>TOTAL</span>
-                <span className="text-[#4A5D23]">R$ {order.total?.toFixed(2)}</span>
+              <div className="flex justify-between items-center pt-3 border-t border-slate-200 mt-2">
+                <span className="text-base font-black text-slate-900 tracking-tight">TOTAL DO ORÇAMENTO:</span>
+                <div className="bg-[#00485C] text-white px-4 py-2 rounded-xl shadow-md">
+                  <span className="text-xl font-black text-white">
+                    R$ {(order.total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="p-6 bg-[#F5F5DC] text-center">
+          {/* Clean Document Footer */}
+          <div className="p-5 bg-slate-100 border-t border-slate-200 text-center text-xs text-slate-600 space-y-1.5">
             {companySettings.quotation_notes && (
-              <p className="text-sm text-gray-600 mb-3">
-                <strong>{companySettings.quotation_notes}</strong>
+              <p className="font-bold text-[#00485C] text-xs">
+                {companySettings.quotation_notes}
               </p>
             )}
-
-            {companySettings.company_info && (
-              <p className="text-xs text-gray-600 mb-3 whitespace-pre-wrap">
-                {companySettings.company_info}
-              </p>
-            )}
-
             {companySettings.company_address && (
-              <p className="text-xs text-gray-500 mb-2">{companySettings.company_address}</p>
+              <p className="text-[11px] text-slate-500">{companySettings.company_address}</p>
             )}
-
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-              {companySettings.company_instagram && (
-                <span>{companySettings.company_instagram}</span>
-              )}
-              {companySettings.company_facebook && (
-                <span>{companySettings.company_facebook}</span>
-              )}
-            </div>
-
-            {companySettings.footer_text && (
-              <p className="text-xs text-gray-400 mt-3">
-                {companySettings.footer_text.replace(/✨/g, '').replace(/🙏/g, '').trim()}
-              </p>
+            {companySettings.company_info && (
+              <p className="text-[11px] text-slate-500 whitespace-pre-wrap">{companySettings.company_info}</p>
             )}
+            <p className="text-[10px] text-slate-400 pt-1 font-semibold uppercase tracking-wider">
+              Documento gerado por xelfy • Gestão & Loja Online
+            </p>
           </div>
-          </div>
-          </motion.div>
+        </div>
+      </motion.div>
 
-      {/* Action Buttons - Hidden on print */}
-      <div className="fixed bottom-6 right-6 print:hidden">
+      {/* Floating Action Button (Download Image) */}
+      <div className="fixed bottom-6 right-6 print:hidden z-30">
         <button
           onClick={handleDownloadImage}
           disabled={isDownloading}
-          className="w-14 h-14 bg-blue-500 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-50"
+          title="Salvar imagem nítida em PNG"
+          className="h-14 px-5 bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-black rounded-full shadow-2xl flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
         >
           {isDownloading ? (
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-gray-950 border-t-transparent rounded-full animate-spin" />
           ) : (
-            <Download className="w-6 h-6 text-white" strokeWidth={2} />
+            <>
+              <Download className="w-5 h-5 stroke-[2.5]" />
+              <span className="text-xs uppercase tracking-wider font-extrabold">Baixar Imagem PNG</span>
+            </>
           )}
         </button>
       </div>
 
       <style>{`
+        /* Isolate quotation document from dark mode overrides so html2canvas renders pure crisp contrast */
+        .quotation-paper,
+        .quotation-paper * {
+          color-scheme: light !important;
+        }
+        .quotation-paper {
+          background-color: #FFFFFF !important;
+          color: #0F172A !important;
+        }
+        .quotation-paper .bg-white {
+          background-color: #FFFFFF !important;
+        }
+        .quotation-paper .bg-slate-50 {
+          background-color: #F8FAFC !important;
+        }
+        .quotation-paper .bg-slate-100 {
+          background-color: #F1F5F9 !important;
+        }
+        .quotation-paper .border-slate-200 {
+          border-color: #E2E8F0 !important;
+        }
+        .quotation-paper .text-slate-900 {
+          color: #0F172A !important;
+        }
+        .quotation-paper .text-slate-600 {
+          color: #475569 !important;
+        }
+        .quotation-paper .text-slate-500 {
+          color: #64748B !important;
+        }
+
         @media print {
-          body { margin: 0; padding: 0; }
+          body { margin: 0; padding: 0; background: #fff !important; }
           .print\\:hidden { display: none !important; }
           .print\\:shadow-none { box-shadow: none !important; }
         }

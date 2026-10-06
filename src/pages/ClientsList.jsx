@@ -64,134 +64,147 @@ export default function ClientsList() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-[#E5F3F7] pb-12">
       {/* Header */}
-      <div className="bg-white px-5 pt-12 pb-6 shadow-sm">
-        <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
-          </button>
-          <h1 className="text-lg font-bold text-[#333333]">Clientes</h1>
-          <div className="w-10" />
-        </div>
+      <div className="bg-[#0D222E] border-b border-[#1C4156] px-4 sm:px-6 lg:px-8 pt-8 pb-5 shadow-sm">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-white"
+            >
+              <ArrowLeft className="w-5 h-5" strokeWidth={2} />
+            </button>
+            <div className="text-center">
+              <h1 className="text-lg sm:text-xl font-black text-white">Clientes Cadastrados</h1>
+              <p className="text-xs text-[#A3D2DF]">{filteredClients.length} cliente(s)</p>
+            </div>
+            <Link
+              to={createPageUrl('ClientForm')}
+              className="h-9 px-3 rounded-xl bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold text-xs flex items-center gap-1.5 shadow-sm"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Novo</span>
+            </Link>
+          </div>
 
-        {/* Search */}
-        <div className="relative mb-3">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" strokeWidth={1.5} />
-          <input
-            type="text"
-            placeholder="Buscar clientes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-[#F9F9F9] rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#2d91a8]/20"
-          />
-        </div>
+          {/* Search */}
+          <div className="relative mb-3">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8EB3BD]" strokeWidth={2} />
+            <input
+              type="text"
+              placeholder="Buscar por nome, WhatsApp ou empresa..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-[#081924] border border-[#1C4156] text-white placeholder-[#6E9AA6] rounded-xl text-sm focus:outline-none focus:border-[#34A8A6] transition-colors"
+            />
+          </div>
 
-        {/* Sort Filter */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => setSortBy('recent')}
-            style={sortBy === 'recent' ? { backgroundColor: 'var(--color-primary)' } : {}}
-            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-              sortBy === 'recent'
-                ? 'text-white'
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            Mais Recentes
-          </button>
-          <button
-            onClick={() => setSortBy('alphabetical')}
-            style={sortBy === 'alphabetical' ? { backgroundColor: 'var(--color-primary)' } : {}}
-            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-              sortBy === 'alphabetical'
-                ? 'text-white'
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            A-Z
-          </button>
+          {/* Sort Filter */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => setSortBy('recent')}
+              className={`flex-1 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                sortBy === 'recent'
+                  ? 'bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold shadow-md'
+                  : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+              }`}
+            >
+              Mais Recentes
+            </button>
+            <button
+              onClick={() => setSortBy('alphabetical')}
+              className={`flex-1 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                sortBy === 'alphabetical'
+                  ? 'bg-gradient-to-r from-[#238799] to-[#34A8A6] text-gray-950 font-bold shadow-md'
+                  : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+              }`}
+            >
+              Ordem Alfabética (A-Z)
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Clients List */}
-      <div className="px-5 py-4 space-y-3">
-        {filteredClients.map(client => {
-          const stats = getClientStats(client.id);
-          return (
-            <motion.div
-              key={client.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-[20px] p-4 shadow-sm"
-            >
-              <div className="flex items-center gap-3 mb-3 cursor-pointer" onClick={() => setSelectedClient(client)}>
-                {client.photo ? (
-                  <img src={client.photo} alt={client.name} className="w-12 h-12 rounded-full object-cover" />
-                ) : (
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-secondary)20' }}>
-                    <User className="w-6 h-6" style={{ color: 'var(--color-primary)' }} strokeWidth={1.5} />
+      {/* Clients Grid - Multi-column horizontal desktop display */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+          {filteredClients.map(client => {
+            const stats = getClientStats(client.id);
+            return (
+              <motion.div
+                key={client.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="group bg-[#0D222E] rounded-2xl p-4 sm:p-5 shadow-sm border border-[#1C4156] hover:border-[#34A8A6]/60 hover:shadow-lg transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-3 cursor-pointer" onClick={() => setSelectedClient(client)}>
+                    {client.photo ? (
+                      <img src={client.photo} alt={client.name} className="w-12 h-12 rounded-xl object-cover border border-[#1C4156]" />
+                    ) : (
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#00485C] border border-[#34A8A6]/40 flex-shrink-0">
+                        <User className="w-6 h-6 text-[#4BCBB4]" strokeWidth={1.5} />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-white text-base truncate group-hover:text-[#4BCBB4] transition-colors">{client.name}</h3>
+                      {client.whatsapp && (
+                        <p className="text-xs text-[#A3D2DF] flex items-center gap-1 mt-0.5">
+                          <Phone className="w-3 h-3 text-[#34A8A6]" />
+                          {client.whatsapp}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                )}
-                <div className="flex-1">
-                  <h3 className="font-semibold text-[#333333]">{client.name}</h3>
-                  {client.whatsapp && (
-                    <p className="text-sm text-gray-400 flex items-center gap-1">
-                      <Phone className="w-3 h-3" />
-                      {client.whatsapp}
-                    </p>
-                  )}
-                </div>
-              </div>
 
-              <div className="grid grid-cols-3 gap-2 mb-3 cursor-pointer" onClick={() => setSelectedClient(client)}>
-                <div className="bg-blue-50 rounded-xl p-2 text-center">
-                  <p className="text-xs text-blue-600">Pedidos</p>
-                  <p className="font-bold text-blue-700">{stats.totalOrders}</p>
+                  <div className="grid grid-cols-3 gap-2 mb-3.5 cursor-pointer" onClick={() => setSelectedClient(client)}>
+                    <div className="bg-[#081924] border border-[#1C4156] rounded-xl p-2 text-center">
+                      <p className="text-[10px] uppercase font-bold text-[#8EB3BD]">Pedidos</p>
+                      <p className="font-black text-white text-sm mt-0.5">{stats.totalOrders}</p>
+                    </div>
+                    <div className="bg-[#081924] border border-[#1C4156] rounded-xl p-2 text-center">
+                      <p className="text-[10px] uppercase font-bold text-[#8EB3BD]">Total</p>
+                      <p className="font-black text-[#4BCBB4] text-xs sm:text-sm mt-0.5">R$ {stats.totalSpent.toFixed(0)}</p>
+                    </div>
+                    <div className="bg-[#081924] border border-[#1C4156] rounded-xl p-2 text-center">
+                      <p className="text-[10px] uppercase font-bold text-[#8EB3BD]">Abertos</p>
+                      <p className="font-black text-amber-400 text-sm mt-0.5">{stats.pendingOrders}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-green-50 rounded-xl p-2 text-center">
-                  <p className="text-xs text-green-600">Total</p>
-                  <p className="font-bold text-green-700 text-sm">R$ {stats.totalSpent.toFixed(0)}</p>
-                </div>
-                <div className="bg-amber-50 rounded-xl p-2 text-center">
-                  <p className="text-xs text-amber-600">Pendentes</p>
-                  <p className="font-bold text-amber-700">{stats.pendingOrders}</p>
-                </div>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(createPageUrl(`ClientForm?id=${client.id}`));
-                  }}
-                  className="flex-1 py-2 bg-blue-50 text-blue-600 rounded-xl text-sm font-medium flex items-center justify-center gap-2 hover:bg-blue-100 transition-colors"
-                >
-                  <Edit2 className="w-4 h-4" strokeWidth={1.5} />
-                  Editar
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (window.confirm(`Deseja realmente excluir ${client.name}?`)) {
-                      base44.entities.Client.delete(client.id).then(() => {
-                        window.location.reload();
-                      });
-                    }
-                  }}
-                  className="flex-1 py-2 bg-red-50 text-red-500 rounded-xl text-sm font-medium flex items-center justify-center gap-2 hover:bg-red-100 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" strokeWidth={1.5} />
-                  Excluir
-                </button>
-              </div>
-            </motion.div>
-          );
-        })}
+                {/* Action Buttons */}
+                <div className="flex gap-2 pt-2 border-t border-[#1C4156]/60">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(createPageUrl(`ClientForm?id=${client.id}`));
+                    }}
+                    className="flex-1 py-2 bg-[#133345] hover:bg-[#1a445c] text-white border border-[#1C4156] rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Edit2 className="w-3.5 h-3.5 text-[#4BCBB4]" strokeWidth={2} />
+                    Editar
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (window.confirm(`Deseja realmente excluir ${client.name}?`)) {
+                        base44.entities.Client.delete(client.id).then(() => {
+                          window.location.reload();
+                        });
+                      }
+                    }}
+                    className="py-2 px-3 bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-800/40 rounded-xl text-xs font-semibold flex items-center justify-center transition-colors"
+                    title="Excluir cliente"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" strokeWidth={2} />
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Client Detail Modal */}

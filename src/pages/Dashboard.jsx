@@ -189,114 +189,130 @@ export default function Dashboard() {
           </div>
           
 
-          <div className="mt-6 space-y-4">
-            <FinancialCards 
-              toReceive={toReceive} 
-              receivedThisMonth={receivedThisMonth} 
-            />
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <FinancialCards 
+                toReceive={toReceive} 
+                receivedThisMonth={receivedThisMonth} 
+              />
+            </div>
             
-            <div className="grid grid-cols-1 gap-4">
+            <div className="lg:col-span-7">
               <FinancialChart data={financialChartData} />
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-5 py-6 space-y-6">
-        {/* Accounts Overview */}
-        <AccountsOverview user={user} />
-
-        {/* Quick Actions */}
+      {/* Content - Horizontal Desktop Layout */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+        {/* Quick Actions (Full horizontal row) */}
         <QuickActions />
 
-        {/* Clients Button */}
-        <Link
-          to={createPageUrl('ClientsList')}
-          className="bg-white rounded-[20px] p-4 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center">
-              <Users className="w-6 h-6 text-blue-500" strokeWidth={1.5} />
-            </div>
-            <div>
-              <h3 className="font-semibold text-[#333333]">Meus Clientes</h3>
-              <p className="text-xs text-gray-400">Ver histórico e detalhes</p>
-            </div>
-          </div>
-          <ChevronRight className="w-5 h-5 text-gray-300" />
-        </Link>
-
-        {/* Revenue Chart */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-[#333333]">Receita</h2>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setRevenuePeriod(7)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                  revenuePeriod === 7 
-                    ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
-                    : 'bg-[#0E2430] text-[#8EB3BD] border border-[#1C4156] hover:text-white'
-                }`}
-              >
-                7 dias
-              </button>
-              <button
-                onClick={() => setRevenuePeriod(15)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                  revenuePeriod === 15 
-                    ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
-                    : 'bg-[#0E2430] text-[#8EB3BD] border border-[#1C4156] hover:text-white'
-                }`}
-              >
-                15 dias
-              </button>
-              <button
-                onClick={() => setRevenuePeriod(30)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                  revenuePeriod === 30 
-                    ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
-                    : 'bg-[#0E2430] text-[#8EB3BD] border border-[#1C4156] hover:text-white'
-                }`}
-              >
-                30 dias
-              </button>
-            </div>
-          </div>
-          <RevenueChart data={revenueData} />
-        </div>
-
-        {/* Recent Orders */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-[#333333]">Pedidos Recentes</h2>
-            <Link 
-              to={createPageUrl('Orders')}
-              className="text-sm font-medium"
-              style={{ color: 'var(--color-primary)' }}
-            >
-              Ver todos
-            </Link>
-          </div>
-          
-          <div className="space-y-3">
-            {recentOrders.length > 0 ? (
-              recentOrders.map(order => (
-                <OrderCard 
-                  key={order.id} 
-                  order={order}
-                  onApprove={handleApprove}
-                  onGenerateReceipt={handleGenerateReceipt}
-                  onShare={handleShare}
-                  onClick={() => navigate(createPageUrl(`OrderForm?id=${order.id}`))}
-                />
-              ))
-            ) : (
-              <div className="bg-white rounded-[20px] p-8 text-center">
-                <p className="text-gray-400 text-sm">Nenhum pedido ainda</p>
+        {/* 2-Column Desktop Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column: Revenue Chart & Accounts (lg:col-span-7) */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Revenue Chart Card */}
+            <div className="bg-[#0D222E] border border-[#1C4156] rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <div>
+                  <h2 className="font-extrabold text-white text-base">Receita</h2>
+                  <p className="text-xs text-[#A3D2DF]">Evolução do faturamento</p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setRevenuePeriod(7)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                      revenuePeriod === 7 
+                        ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
+                        : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+                    }`}
+                  >
+                    7 dias
+                  </button>
+                  <button
+                    onClick={() => setRevenuePeriod(15)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                      revenuePeriod === 15 
+                        ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
+                        : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+                    }`}
+                  >
+                    15 dias
+                  </button>
+                  <button
+                    onClick={() => setRevenuePeriod(30)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                      revenuePeriod === 30 
+                        ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
+                        : 'bg-[#081924] text-[#A3D2DF] border border-[#1C4156] hover:text-white'
+                    }`}
+                  >
+                    30 dias
+                  </button>
+                </div>
               </div>
-            )}
+              <RevenueChart data={revenueData} />
+            </div>
+
+            {/* Accounts Overview */}
+            <AccountsOverview user={user} />
+          </div>
+
+          {/* Right Column: Clients & Recent Orders (lg:col-span-5) */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Clients Button */}
+            <Link
+              to={createPageUrl('ClientsList')}
+              className="bg-[#0D222E] border border-[#1C4156] hover:border-[#34A8A6]/60 rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition-all group"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 bg-[#00485C] border border-[#34A8A6]/40 rounded-xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-[#4BCBB4]" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white group-hover:text-[#4BCBB4] transition-colors">Meus Clientes</h3>
+                  <p className="text-xs text-[#A3D2DF]">Histórico e detalhes de clientes</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-[#8EB3BD] group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+            </Link>
+
+            {/* Recent Orders */}
+            <div className="bg-[#0D222E] border border-[#1C4156] rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="font-extrabold text-white text-base">Pedidos Recentes</h2>
+                  <p className="text-xs text-[#A3D2DF]">Últimas movimentações</p>
+                </div>
+                <Link 
+                  to={createPageUrl('Orders')}
+                  className="text-xs font-bold text-[#4BCBB4] hover:underline"
+                >
+                  Ver todos
+                </Link>
+              </div>
+              
+              <div className="space-y-3">
+                {recentOrders.length > 0 ? (
+                  recentOrders.map(order => (
+                    <OrderCard 
+                      key={order.id} 
+                      order={order}
+                      onApprove={handleApprove}
+                      onGenerateReceipt={handleGenerateReceipt}
+                      onShare={handleShare}
+                      onClick={() => navigate(createPageUrl(`OrderForm?id=${order.id}`))}
+                    />
+                  ))
+                ) : (
+                  <div className="bg-[#081924] border border-[#1C4156] rounded-xl p-8 text-center">
+                    <p className="text-[#8EB3BD] text-xs">Nenhum pedido recente</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

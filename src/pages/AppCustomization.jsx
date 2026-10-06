@@ -35,9 +35,8 @@ export default function AppCustomization() {
     company_address: '',
     company_instagram: '',
     company_facebook: '',
-    primary_color: '#2d91a8',
-    secondary_color: '#52cfc1',
-    dark_mode: false,
+    primary_color: '#00485C',
+    secondary_color: '#34A8A6',
     fab_position: 'left',
     footer_text: 'Obrigado pela preferência! ✨',
     quotation_notes: 'Este orçamento é válido por 15 dias',
@@ -56,9 +55,8 @@ export default function AppCustomization() {
         company_address: currentSettings.company_address || '',
         company_instagram: currentSettings.company_instagram || '',
         company_facebook: currentSettings.company_facebook || '',
-        primary_color: currentSettings.primary_color || '#2d91a8',
-        secondary_color: currentSettings.secondary_color || '#52cfc1',
-        dark_mode: currentSettings.dark_mode || false,
+        primary_color: currentSettings.primary_color || '#00485C',
+        secondary_color: currentSettings.secondary_color || '#34A8A6',
         fab_position: currentSettings.fab_position || 'left',
         footer_text: currentSettings.footer_text || 'Obrigado pela preferência! ✨',
         quotation_notes: currentSettings.quotation_notes || 'Este orçamento é válido por 15 dias',
@@ -174,11 +172,9 @@ export default function AppCustomization() {
       document.documentElement.style.setProperty('--color-primary', formData.primary_color);
       document.documentElement.style.setProperty('--color-secondary', formData.secondary_color);
       
-      if (formData.dark_mode) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      // Ensure dark theme is permanently active
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
       
       // Force a reload to apply all colors
       window.location.href = '/';
@@ -417,37 +413,6 @@ export default function AppCustomization() {
           </div>
         </div>
 
-        {/* Dark Mode */}
-        <div>
-          <h3 className="text-sm font-semibold text-[#333333] mb-3">Modo Escuro</h3>
-          <div className="bg-white rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                {formData.dark_mode ? (
-                  <Moon className="w-5 h-5 text-[#2d91a8]" />
-                ) : (
-                  <Sun className="w-5 h-5 text-amber-500" />
-                )}
-                <div>
-                  <h4 className="font-semibold text-[#333333]">Modo Escuro</h4>
-                  <p className="text-xs text-gray-400">Tema escuro para o aplicativo</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setFormData({ ...formData, dark_mode: !formData.dark_mode })}
-                className={`w-14 h-8 rounded-full transition-colors ${
-                  formData.dark_mode ? 'bg-[#2d91a8]' : 'bg-gray-200'
-                }`}
-              >
-                <div
-                  className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform ${
-                    formData.dark_mode ? 'translate-x-7' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-            </div>
-          </div>
-        </div>
 
         {/* Custom Messages */}
         <div>
