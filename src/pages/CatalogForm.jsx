@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Save, Trash2, Package, DollarSign, Layers, Camera, ToggleLeft, ToggleRight, Plus, Minus, X, Search, ChevronDown, Tag } from 'lucide-react';
+import { ArrowLeft, Save, Trash2, Package, DollarSign, Layers, Camera, ToggleLeft, ToggleRight, Plus, Minus, X, ChevronDown, Tag } from 'lucide-react';
 
 export default function CatalogForm() {
   const navigate = useNavigate();

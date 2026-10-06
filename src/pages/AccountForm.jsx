@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Save, Trash2, Wallet, Building, Coins, CreditCard, Plus } from 'lucide-react';
+import { ArrowLeft, Save, Trash2, Wallet, Building, Coins, CreditCard } from 'lucide-react';
 
 const iconOptions = [
   { name: 'Wallet', icon: Wallet, label: 'Carteira' },

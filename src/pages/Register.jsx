@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/api/supabaseClient';
-import { Lock, Mail, User, Eye, EyeOff, ArrowRight, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { Lock, Mail, User, Eye, EyeOff, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 
 export default function Register() {
   const [name, setName] = useState('');

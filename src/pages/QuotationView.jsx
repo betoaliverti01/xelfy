@@ -3,11 +3,10 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Printer, Share2, Calendar, Download, Image } from 'lucide-react';
+import { ArrowLeft, Printer, Share2, Download } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import html2canvas from 'html2canvas';
-import { generateOrderWhatsAppMessage } from '@/components/utils/WhatsAppMessage';
 
 export default function QuotationView() {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Search, User, Phone, Mail, ShoppingBag, DollarSign, X, Edit2, Trash2 } from 'lucide-react';
+import { ArrowLeft, Search, User, Phone, ShoppingBag, X, Edit2, Trash2 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';

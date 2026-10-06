@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Save, Trash2, User, Plus, Minus, Search, X, Check, Calendar, FileText, DollarSign } from 'lucide-react';
-import { format, addMonths } from 'date-fns';
+import { ArrowLeft, Save, Trash2, User, Plus, Minus, Search, X, Calendar, DollarSign } from 'lucide-react';
+import { format } from 'date-fns';
 import PaymentModal from '@/components/orders/PaymentModal';
 
 const statusOptions = ['Orçamento', 'Pendente', 'Aprovado', 'Concluído', 'Cancelado'];

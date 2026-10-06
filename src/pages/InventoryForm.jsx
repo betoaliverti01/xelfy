@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Save, Trash2, Package } from 'lucide-react';
+import { ArrowLeft, Save, Trash2 } from 'lucide-react';
 
 const units = ['un', 'kg', 'g', 'L', 'ml', 'm', 'cm', 'pacote', 'caixa'];
 

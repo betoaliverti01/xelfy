@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Users, ChevronRight, ArrowDownRight, LogOut } from 'lucide-react';
+import { Users, ChevronRight, LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import NotificationBell from '@/components/notifications/NotificationBell';
 import FinancialCards from '@/components/dashboard/FinancialCards';
@@ -14,7 +14,6 @@ import AccountsOverview from '@/components/dashboard/AccountsOverview';
 import { createPageUrl } from '@/utils';
 import { generateOrderWhatsAppMessage } from '@/components/utils/WhatsAppMessage';
 import { format, subDays, startOfMonth, endOfMonth } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);

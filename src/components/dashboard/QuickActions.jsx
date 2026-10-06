@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, UserPlus, Settings, Package } from 'lucide-react';
+import { UserPlus, Settings, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
