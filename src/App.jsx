@@ -13,6 +13,8 @@ import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+import SplashScreen from '@/components/ui/SplashScreen';
+
 const { Pages, Layout } = pagesConfig;
 const DashboardPage = Pages['Dashboard'];
 
@@ -27,11 +29,7 @@ const ProtectedRoute = ({ children, pageName }) => {
   const { isAuthenticated, isLoadingAuth } = useAuth();
 
   if (isLoadingAuth) {
-    return (
-      <div className="fixed inset-0 bg-gray-950 flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-gray-800 border-t-[#2d91a8] rounded-full animate-spin"></div>
-      </div>
-    );
+    return <SplashScreen message="Verificando acesso..." />;
   }
 
   if (!isAuthenticated) {
@@ -50,11 +48,7 @@ const AppRoutes = () => {
   const { isAuthenticated, isLoadingAuth } = useAuth();
 
   if (isLoadingAuth) {
-    return (
-      <div className="fixed inset-0 bg-gray-950 flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-gray-800 border-t-[#2d91a8] rounded-full animate-spin"></div>
-      </div>
-    );
+    return <SplashScreen message="Iniciando xelfy..." />;
   }
 
   return (

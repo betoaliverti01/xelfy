@@ -63,14 +63,14 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative selection:bg-[#2d91a8] selection:text-white">
+    <div className="min-h-screen bg-[#07151D] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative selection:bg-[#00485C] selection:text-white">
       {/* Background Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#2d91a8]/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#00485C]/25 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
         <Link to="/" className="flex items-center justify-center gap-2.5 mb-8 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#2d91a8] to-[#52cfc1] flex items-center justify-center shadow-lg shadow-teal-500/20 font-bold text-gray-950 text-xl tracking-wider group-hover:scale-105 transition-transform">
-            X
+          <div className="w-11 h-11 rounded-xl bg-[#00485C] border border-[#34A8A6]/40 p-1 flex items-center justify-center shadow-lg shadow-teal-950/40 group-hover:scale-105 transition-transform">
+            <img src="/logo.png" alt="xelfy" className="w-full h-full object-contain" />
           </div>
           <span className="text-2xl font-black tracking-tight text-white">xelfy</span>
         </Link>
@@ -78,16 +78,16 @@ export default function Login() {
         <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white">
           Acesse sua conta
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-400">
+        <p className="mt-2 text-center text-sm text-[#8EB3BD]">
           Ou{' '}
-          <Link to="/register" className="font-medium text-[#52cfc1] hover:underline">
+          <Link to="/register" className="font-semibold text-[#4BCBB4] hover:underline">
             crie uma nova conta gratuitamente
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
-        <div className="bg-gray-900/90 border border-gray-800 py-8 px-6 sm:px-10 shadow-2xl rounded-3xl backdrop-blur-xl">
+        <div className="bg-[#0D222E]/95 border border-[#1C4156] py-8 px-6 sm:px-10 shadow-2xl rounded-3xl backdrop-blur-xl">
           {errorMsg && (
             <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-start gap-3">
               <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-400" />
@@ -110,7 +110,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="seu@email.com"
-                  className="block w-full pl-11 pr-4 py-3 bg-gray-950 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2d91a8] focus:border-transparent text-sm transition-all"
+                  className="block w-full pl-11 pr-4 py-3 bg-[#081924] border border-[#1C4156] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#34A8A6] focus:border-transparent text-sm transition-all"
                 />
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="block w-full pl-11 pr-11 py-3 bg-gray-950 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2d91a8] focus:border-transparent text-sm transition-all"
+                  className="block w-full pl-11 pr-11 py-3 bg-[#081924] border border-[#1C4156] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#34A8A6] focus:border-transparent text-sm transition-all"
                 />
                 <button
                   type="button"
@@ -147,7 +147,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2 flex justify-center items-center gap-2 py-3.5 px-4 rounded-xl shadow-lg shadow-teal-500/20 text-sm font-bold text-gray-950 bg-gradient-to-r from-[#2d91a8] to-[#52cfc1] hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2d91a8] transition-all disabled:opacity-50 active:scale-98"
+                className="w-full mt-2 flex justify-center items-center gap-2 py-3.5 px-4 rounded-xl shadow-lg shadow-teal-950/40 text-sm font-bold text-gray-950 bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#34A8A6] transition-all disabled:opacity-50 active:scale-98"
               >
                 {loading ? (
                   <>
@@ -157,7 +157,7 @@ export default function Login() {
                 ) : (
                   <>
                     Entrar na Conta
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                   </>
                 )}
               </button>
@@ -166,10 +166,10 @@ export default function Login() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-800" />
+              <div className="w-full border-t border-[#1C4156]" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-gray-900 px-3 text-gray-500 font-medium">Ou continue com</span>
+              <span className="bg-[#0D222E] px-3 text-[#7296A0] font-medium">Ou continue com</span>
             </div>
           </div>
 
@@ -177,7 +177,7 @@ export default function Login() {
             type="button"
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-gray-800 bg-gray-950 hover:bg-gray-850 hover:border-gray-700 text-gray-200 text-sm font-semibold transition-all shadow-sm active:scale-98"
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-[#1C4156] bg-[#081924] hover:bg-white/5 text-gray-200 text-sm font-semibold transition-all shadow-sm active:scale-98"
           >
             <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
               <path
@@ -201,7 +201,7 @@ export default function Login() {
           </button>
 
           <div className="mt-6 text-center">
-            <Link to="/" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+            <Link to="/" className="text-xs text-[#7296A0] hover:text-[#4BCBB4] transition-colors">
               ← Voltar para a página inicial
             </Link>
           </div>

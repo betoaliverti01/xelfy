@@ -40,19 +40,18 @@ export default function DraggableFAB() {
 
   return (
     <div
-      className={`fixed bottom-28 z-50 transition-all duration-300 ${
+      className={`fixed bottom-24 z-40 lg:hidden transition-all duration-300 ${
         position === 'right' ? 'right-5' : 'left-5'
       }`}
     >
       <Link
         to={createPageUrl('QuickAdd')}
         style={{
-          backgroundColor: settings[0]?.primary_color || '#2d91a8',
-          boxShadow: `0 10px 25px ${settings[0]?.primary_color || '#2d91a8'}30`
+          boxShadow: '0 10px 25px rgba(0, 72, 92, 0.45)'
         }}
-        className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300 active:scale-95"
+        className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#238799] via-[#34A8A6] to-[#4BCBB4] border-2 border-white/20 flex items-center justify-center shadow-2xl hover:scale-105 transition-transform duration-300 active:scale-95"
       >
-        <Plus className="w-6 h-6 text-white" strokeWidth={2} />
+        <Plus className="w-6 h-6 text-gray-950 font-black stroke-[2.5]" />
       </Link>
     </div>
   );

@@ -18,21 +18,21 @@ import {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white selection:bg-[#2d91a8] selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#07151D] text-white selection:bg-[#00485C] selection:text-white overflow-x-hidden">
       {/* Background Glows */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#2d91a8]/15 rounded-full blur-[140px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#52cfc1]/10 rounded-full blur-[160px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00485C]/25 rounded-full blur-[140px]" />
+        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#34A8A6]/15 rounded-full blur-[160px]" />
       </div>
 
       {/* Header Navigation */}
-      <header className="relative z-20 border-b border-gray-800/80 backdrop-blur-xl bg-gray-950/80 sticky top-0">
+      <header className="relative z-20 border-b border-[#1C4156]/80 backdrop-blur-xl bg-[#07151D]/90 sticky top-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#2d91a8] to-[#52cfc1] flex items-center justify-center shadow-lg shadow-teal-500/20 font-bold text-gray-950 text-xl tracking-wider">
-              X
+            <div className="w-10 h-10 rounded-xl bg-[#00485C] border border-[#34A8A6]/40 p-1 flex items-center justify-center shadow-lg shadow-teal-950/40">
+              <img src="/logo.png" alt="xelfy" className="w-full h-full object-contain" />
             </div>
-            <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">
+            <span className="text-2xl font-black tracking-tight text-white">
               xelfy
             </span>
           </div>
@@ -40,23 +40,23 @@ export default function LandingPage() {
           <div className="flex items-center gap-3 sm:gap-4">
             <Link
               to="/Storefront"
-              className="text-xs sm:text-sm font-medium text-gray-300 hover:text-white px-3 py-2 rounded-lg hover:bg-gray-850 transition-colors hidden sm:inline-flex items-center gap-1.5"
+              className="text-xs sm:text-sm font-medium text-gray-300 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-colors hidden sm:inline-flex items-center gap-1.5"
             >
-              <Store className="w-4 h-4 text-[#52cfc1]" />
+              <Store className="w-4 h-4 text-[#4BCBB4]" />
               Ver Vitrine Exemplo
             </Link>
             <Link
               to="/login"
-              className="text-xs sm:text-sm font-medium text-gray-300 hover:text-white px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+              className="text-xs sm:text-sm font-medium text-gray-300 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-colors"
             >
               Entrar
             </Link>
             <Link
               to="/register"
-              className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-[#2d91a8] to-[#52cfc1] hover:brightness-110 text-gray-950 px-4 py-2.5 rounded-xl shadow-lg shadow-teal-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-1.5"
+              className="text-xs sm:text-sm font-bold bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] hover:brightness-110 text-gray-950 px-4 py-2.5 rounded-xl shadow-lg shadow-teal-950/40 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-1.5"
             >
               Criar Conta Grátis
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </Link>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/30 text-[#52cfc1] text-xs font-medium mb-8"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00485C]/40 border border-[#34A8A6]/40 text-[#4BCBB4] text-xs font-semibold mb-8"
         >
           <Sparkles className="w-3.5 h-3.5" />
           Sistema 100% Autônomo e Gratuito • Sem Taxas Ocultas
@@ -81,7 +81,7 @@ export default function LandingPage() {
           className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.15]"
         >
           O controle total do seu negócio na{' '}
-          <span className="bg-gradient-to-r from-[#2d91a8] via-[#52cfc1] to-teal-200 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] bg-clip-text text-transparent">
             palma da sua mão.
           </span>
         </motion.h1>
@@ -104,14 +104,14 @@ export default function LandingPage() {
         >
           <Link
             to="/register"
-            className="w-full sm:w-auto text-base font-bold bg-gradient-to-r from-[#2d91a8] to-[#52cfc1] hover:brightness-110 text-gray-950 px-8 py-4 rounded-2xl shadow-xl shadow-teal-500/25 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+            className="w-full sm:w-auto text-base font-bold bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] hover:brightness-110 text-gray-950 px-8 py-4 rounded-2xl shadow-xl shadow-teal-950/40 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
           >
             Começar Gratuitamente
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 stroke-[2.5]" />
           </Link>
           <Link
             to="/login"
-            className="w-full sm:w-auto text-base font-semibold bg-gray-900 border border-gray-800 hover:border-gray-700 hover:bg-gray-850 text-gray-200 px-6 py-4 rounded-2xl transition-all flex items-center justify-center"
+            className="w-full sm:w-auto text-base font-semibold bg-[#0D222E] border border-[#1C4156] hover:border-[#34A8A6]/50 hover:bg-[#122C3B] text-gray-200 px-6 py-4 rounded-2xl transition-all flex items-center justify-center"
           >
             Acessar Minha Conta
           </Link>
@@ -125,15 +125,15 @@ export default function LandingPage() {
           className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-gray-400"
         >
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-[#52cfc1]" />
+            <CheckCircle2 className="w-4 h-4 text-[#4BCBB4]" />
             <span>Sem cartão de crédito</span>
           </div>
           <div className="flex items-center gap-2">
-            <Smartphone className="w-4 h-4 text-[#52cfc1]" />
+            <Smartphone className="w-4 h-4 text-[#4BCBB4]" />
             <span>Instalável no celular (PWA)</span>
           </div>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#52cfc1]" />
+            <ShieldCheck className="w-4 h-4 text-[#4BCBB4]" />
             <span>Banco de dados seguro (RLS)</span>
           </div>
         </motion.div>
@@ -263,13 +263,13 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-12 border-t border-gray-850 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-gray-500 text-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#2d91a8] to-[#52cfc1] flex items-center justify-center font-bold text-gray-950 text-xs">
-            X
+      <footer className="relative z-10 py-12 border-t border-[#1C4156] px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-gray-400 text-sm">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-[#00485C] border border-[#34A8A6]/40 p-0.5 flex items-center justify-center">
+            <img src="/logo.png" alt="xelfy" className="w-full h-full object-contain" />
           </div>
-          <span className="font-semibold text-gray-300">xelfy</span>
-          <span>© 2026 • Todos os direitos reservados.</span>
+          <span className="font-bold text-white">xelfy</span>
+          <span className="text-xs text-gray-500">© 2026 • Todos os direitos reservados.</span>
         </div>
         <div className="flex items-center gap-6">
           <Link to="/Storefront" className="hover:text-gray-300 transition-colors">Vitrine Pública</Link>

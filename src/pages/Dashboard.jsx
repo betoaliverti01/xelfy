@@ -132,9 +132,9 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#07151D] text-[#E5F3F7]">
       {/* Header */}
-      <div className="relative overflow-hidden" style={{ background: `linear-gradient(to bottom right, var(--color-primary), var(--color-secondary))` }}>
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#00485C] via-[#0A2E3B] to-[#07151D] border-b border-[#1C4156]">
         {settings[0]?.company_cover && (
           <div className="absolute inset-0 opacity-20">
             <img 
@@ -149,25 +149,23 @@ export default function Dashboard() {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative px-5 pt-12 pb-6"
+          className="relative max-w-7xl mx-auto px-5 pt-8 pb-6"
         >
           <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3.5">
               {settings[0]?.company_logo ? (
-                <div className="w-16 h-16 min-w-[64px] rounded-full overflow-hidden bg-white shadow-md flex-shrink-0">
-                  <img src={settings[0].company_logo} alt="Logo" className="w-full h-full object-cover" />
+                <div className="w-14 h-14 min-w-[56px] rounded-2xl overflow-hidden bg-[#00485C] border border-[#34A8A6]/40 shadow-md flex-shrink-0 p-1">
+                  <img src={settings[0].company_logo} alt="Logo" className="w-full h-full object-contain" />
                 </div>
-              ) : user?.full_name ? (
-                <div className="w-14 h-14 min-w-[56px] rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-md flex-shrink-0 border-2 border-white">
-                  <span className="text-white font-bold text-xl">
-                    {user.full_name.charAt(0).toUpperCase()}
-                  </span>
+              ) : (
+                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-[#00485C] border border-[#34A8A6]/40 p-1 flex items-center justify-center shadow-md flex-shrink-0">
+                  <img src="/logo.png" alt="xelfy" className="w-full h-full object-contain" />
                 </div>
-              ) : null}
+              )}
               <div>
-                <p className="text-white/70 text-sm">{getGreeting()}</p>
-                <h1 className="font-bold text-white text-lg">
-                  {settings[0]?.company_name || user?.full_name || 'Bem-vindo'}
+                <p className="text-[#8EB3BD] text-xs font-semibold uppercase tracking-wider">{getGreeting()}</p>
+                <h1 className="font-extrabold text-white text-lg sm:text-xl">
+                  {settings[0]?.company_name || user?.full_name || 'xelfy Painel'}
                 </h1>
               </div>
             </div>
@@ -183,14 +181,13 @@ export default function Dashboard() {
                 }}
                 title="Sair da conta"
                 aria-label="Sair da conta"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm flex items-center justify-center text-white transition-all border border-white/20 shadow-sm"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm flex items-center justify-center text-white transition-all border border-white/20 shadow-sm"
               >
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
           </div>
           
-
 
           <div className="mt-6 space-y-4">
             <FinancialCards 
@@ -206,7 +203,7 @@ export default function Dashboard() {
       </div>
 
       {/* Content */}
-      <div className="px-5 py-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-5 py-6 space-y-6">
         {/* Accounts Overview */}
         <AccountsOverview user={user} />
 
@@ -237,27 +234,30 @@ export default function Dashboard() {
             <div className="flex gap-2">
               <button
                 onClick={() => setRevenuePeriod(7)}
-                style={revenuePeriod === 7 ? { backgroundColor: 'var(--color-primary)' } : {}}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  revenuePeriod === 7 ? 'text-white' : 'bg-gray-100 text-gray-500'
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  revenuePeriod === 7 
+                    ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
+                    : 'bg-[#0E2430] text-[#8EB3BD] border border-[#1C4156] hover:text-white'
                 }`}
               >
                 7 dias
               </button>
               <button
                 onClick={() => setRevenuePeriod(15)}
-                style={revenuePeriod === 15 ? { backgroundColor: 'var(--color-primary)' } : {}}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  revenuePeriod === 15 ? 'text-white' : 'bg-gray-100 text-gray-500'
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  revenuePeriod === 15 
+                    ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
+                    : 'bg-[#0E2430] text-[#8EB3BD] border border-[#1C4156] hover:text-white'
                 }`}
               >
                 15 dias
               </button>
               <button
                 onClick={() => setRevenuePeriod(30)}
-                style={revenuePeriod === 30 ? { backgroundColor: 'var(--color-primary)' } : {}}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  revenuePeriod === 30 ? 'text-white' : 'bg-gray-100 text-gray-500'
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  revenuePeriod === 30 
+                    ? 'bg-gradient-to-r from-[#238799] via-[#34A8A6] to-[#4BCBB4] text-gray-950 font-bold shadow-md shadow-teal-950/30' 
+                    : 'bg-[#0E2430] text-[#8EB3BD] border border-[#1C4156] hover:text-white'
                 }`}
               >
                 30 dias
