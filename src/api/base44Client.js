@@ -219,6 +219,12 @@ export const base44 = {
       },
     },
   },
+
+  appLogs: {
+    async logUserInApp(pageName) {
+      return true;
+    },
+  },
 };
 
 export default base44;
