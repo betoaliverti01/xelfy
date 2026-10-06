@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
             setUser({
               id: session.user.id,
               email: session.user.email,
-              name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
+              name: session.user.user_metadata?.name || session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+              avatar: session.user.user_metadata?.avatar_url || null,
             });
             setIsAuthenticated(true);
           } else {
@@ -53,7 +54,8 @@ export const AuthProvider = ({ children }) => {
           setUser({
             id: session.user.id,
             email: session.user.email,
-            name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
+            name: session.user.user_metadata?.name || session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+            avatar: session.user.user_metadata?.avatar_url || null,
           });
           setIsAuthenticated(true);
         } else {

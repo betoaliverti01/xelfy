@@ -8,6 +8,7 @@ import { pagesConfig } from './pages.config';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -15,9 +16,11 @@ import Register from './pages/Register';
 const { Pages, Layout } = pagesConfig;
 const DashboardPage = Pages['Dashboard'];
 
-const LayoutWrapper = ({ children, currentPageName }) => Layout ?
-  <Layout currentPageName={currentPageName}>{children}</Layout>
-  : <>{children}</>;
+const LayoutWrapper = ({ children, currentPageName }) => (
+  <ErrorBoundary>
+    {Layout ? <Layout currentPageName={currentPageName}>{children}</Layout> : <>{children}</>}
+  </ErrorBoundary>
+);
 
 // Protected Route Component
 const ProtectedRoute = ({ children, pageName }) => {
@@ -93,7 +96,7 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Public Storefront Route */}
+      {/* Public Storefront Routes */}
       <Route
         path="/Storefront"
         element={
@@ -102,23 +105,53 @@ const AppRoutes = () => {
           </PublicStoreRoute>
         }
       />
+      <Route
+        path="/storefront"
+        element={
+          <PublicStoreRoute pageName="Storefront">
+            {React.createElement(Pages['Storefront'])}
+          </PublicStoreRoute>
+        }
+      />
 
-      {/* All Other Registered Pages (Protected) */}
+      {/* Common Portuguese Route Aliases */}
+      <Route path="/pedidos" element={<ProtectedRoute pageName="Orders"><Pages.Orders /></ProtectedRoute>} />
+      <Route path="/catalogo" element={<ProtectedRoute pageName="Catalog"><Pages.Catalog /></ProtectedRoute>} />
+      <Route path="/financeiro" element={<ProtectedRoute pageName="Financial"><Pages.Financial /></ProtectedRoute>} />
+      <Route path="/agenda" element={<ProtectedRoute pageName="Schedule"><Pages.Schedule /></ProtectedRoute>} />
+      <Route path="/clientes" element={<ProtectedRoute pageName="ClientsList"><Pages.ClientsList /></ProtectedRoute>} />
+      <Route path="/estoque" element={<ProtectedRoute pageName="InventoryList"><Pages.InventoryList /></ProtectedRoute>} />
+      <Route path="/configuracoes" element={<ProtectedRoute pageName="AppCustomization"><Pages.AppCustomization /></ProtectedRoute>} />
+      <Route path="/contas" element={<ProtectedRoute pageName="AccountList"><Pages.AccountList /></ProtectedRoute>} />
+
+      {/* All Other Registered Pages (Protected with both original and lowercase paths) */}
       {Object.entries(Pages).map(([path, Page]) => {
         if (['LandingPage', 'Login', 'Register', 'Dashboard', 'Storefront'].includes(path)) {
           return null;
         }
 
+        const lowerPath = path.toLowerCase();
         return (
-          <Route
-            key={path}
-            path={`/${path}`}
-            element={
-              <ProtectedRoute pageName={path}>
-                <Page />
-              </ProtectedRoute>
-            }
-          />
+          <React.Fragment key={path}>
+            <Route
+              path={`/${path}`}
+              element={
+                <ProtectedRoute pageName={path}>
+                  <Page />
+                </ProtectedRoute>
+              }
+            />
+            {lowerPath !== path && (
+              <Route
+                path={`/${lowerPath}`}
+                element={
+                  <ProtectedRoute pageName={path}>
+                    <Page />
+                  </ProtectedRoute>
+                }
+              />
+            )}
+          </React.Fragment>
         );
       })}
 

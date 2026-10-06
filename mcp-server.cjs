@@ -8,7 +8,7 @@
 const readline = require('readline');
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://cxqmqmlyizduqojihzwc.supabase.co';
-const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4cW1xbWx5aXpkdXFvamloendjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM1NDM5OTUsImV4cCI6MjA1OTExOTk5NX0.8O-a-qfA7q0qgL0bHkY-K4D3v5X9w4G8N3m7k8j8Y4o';
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4cW1xbWx5aXpkdXFvamloendjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzczMTMsImV4cCI6MjEwNjgxMzMxM30.ceTHZbYhwDTEaS5ZYIJwUS6z03P8a1EzZXV2Ks_qvzA';
 
 const HEADERS = {
   'apikey': SUPABASE_ANON_KEY,

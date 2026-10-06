@@ -38,13 +38,16 @@ export default function Storefront() {
     queryFn: async () => {
       try {
         const allStores = await base44.entities.OnlineStore.list();
-        return allStores.filter(s => s.store_url === storeUrlParam && s.is_published);
+        if (storeUrlParam) {
+          return allStores.filter(s => s.store_url === storeUrlParam && s.is_published);
+        }
+        return allStores.filter(s => s.is_published);
       } catch { return []; }
     },
-    enabled: !!storeUrlParam,
+    enabled: true,
   });
 
-  const store = stores[0];
+  const store = stores[0] || {};
 
   useEffect(() => {
     if (store?.created_by) setStoreOwner(store.created_by);
