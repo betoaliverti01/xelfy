@@ -1,46 +1,90 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { supabase, isSupabaseConfigured } from '@/api/supabaseClient';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [isLoadingAuth, setIsLoadingAuth] = useState(false);
-  const [isLoadingPublicSettings, setIsLoadingPublicSettings] = useState(false);
-  const [authError, setAuthError] = useState(null);
-  const [appPublicSettings, setAppPublicSettings] = useState({
-    id: 'xelfy',
-    public_settings: 'public_without_login',
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
   useEffect(() => {
-    checkAppState();
+    // 1. Verificar sessão inicial
+    const checkSession = async () => {
+      try {
+        if (isSupabaseConfigured) {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user) {
+            setUser({
+              id: session.user.id,
+              email: session.user.email,
+              name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
+            });
+            setIsAuthenticated(true);
+          } else {
+            setUser(null);
+            setIsAuthenticated(false);
+          }
+        } else {
+          const storedUser = localStorage.getItem('xelfy_local_user');
+          if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            setIsAuthenticated(true);
+          } else {
+            setUser(null);
+            setIsAuthenticated(false);
+          }
+        }
+      } catch (err) {
+        console.error('Erro na checagem de sessão:', err);
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoadingAuth(false);
+      }
+    };
+
+    checkSession();
+
+    // 2. Escutar mudanças de autenticação
+    if (isSupabaseConfigured) {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session?.user) {
+          setUser({
+            id: session.user.id,
+            email: session.user.email,
+            name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
+          });
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+        setIsLoadingAuth(false);
+      });
+
+      return () => {
+        subscription?.unsubscribe();
+      };
+    }
   }, []);
 
-  const checkAppState = async () => {
+  const logout = async () => {
     try {
-      setIsLoadingAuth(true);
-      const currentUser = await base44.auth.me();
-      setUser(currentUser);
-      setIsAuthenticated(true);
-      setIsLoadingAuth(false);
-      setIsLoadingPublicSettings(false);
-    } catch (error) {
-      console.error('User auth check failed:', error);
-      setIsLoadingAuth(false);
-      setIsLoadingPublicSettings(false);
+      if (isSupabaseConfigured) {
+        await supabase.auth.signOut();
+      }
+      localStorage.removeItem('xelfy_local_user');
+      setUser(null);
+      setIsAuthenticated(false);
+      window.location.href = '/login';
+    } catch (err) {
+      console.error('Erro ao sair:', err);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    base44.auth.logout();
-  };
-
   const navigateToLogin = () => {
-    base44.auth.redirectToLogin();
+    window.location.href = '/login';
   };
 
   return (
@@ -49,12 +93,8 @@ export const AuthProvider = ({ children }) => {
         user,
         isAuthenticated,
         isLoadingAuth,
-        isLoadingPublicSettings,
-        authError,
-        appPublicSettings,
         logout,
         navigateToLogin,
-        checkAppState,
       }}
     >
       {children}

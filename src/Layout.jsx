@@ -5,7 +5,7 @@ import DraggableFAB from '@/components/ui/DraggableFAB';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Layout({ children, currentPageName }) {
-  const pagesWithoutNav = ['ClientForm', 'OrderForm', 'CatalogForm', 'FinancialForm', 'QuickAdd', 'Receipt', 'QuotationView', 'Storefront', 'EventForm'];
+  const pagesWithoutNav = ['ClientForm', 'OrderForm', 'CatalogForm', 'FinancialForm', 'QuickAdd', 'Receipt', 'QuotationView', 'Storefront', 'EventForm', 'LandingPage', 'Login', 'Register'];
   const showNav = !pagesWithoutNav.includes(currentPageName);
   const [darkMode, setDarkMode] = useState(false);
 

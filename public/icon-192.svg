@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="xelfyGrad192" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d91a8" />
+      <stop offset="100%" stop-color="#52cfc1" />
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="48" fill="#111827" />
+  <path d="M52 48 L82 96 L52 144" stroke="url(#xelfyGrad192)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M140 48 L110 96 L140 144" stroke="url(#xelfyGrad192)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <circle cx="96" cy="96" r="11" fill="#52cfc1" />
+</svg>

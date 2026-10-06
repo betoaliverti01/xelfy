@@ -74,10 +74,16 @@ import StoreSettings from './pages/StoreSettings';
 import Storefront from './pages/Storefront';
 import ToReceiveList from './pages/ToReceiveList';
 import TransferForm from './pages/TransferForm';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "LandingPage": LandingPage,
+    "Login": Login,
+    "Register": Register,
     "AccountForm": AccountForm,
     "AccountList": AccountList,
     "AppCustomization": AppCustomization,

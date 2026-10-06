@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Users, ChevronRight, ArrowDownRight } from 'lucide-react';
+import { Users, ChevronRight, ArrowDownRight, LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import NotificationBell from '@/components/notifications/NotificationBell';
 import FinancialCards from '@/components/dashboard/FinancialCards';
@@ -172,8 +172,21 @@ export default function Dashboard() {
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <NotificationBell user={user} />
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.confirm('Deseja realmente sair da sua conta?')) {
+                    base44.auth.logout();
+                  }
+                }}
+                title="Sair da conta"
+                aria-label="Sair da conta"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-sm flex items-center justify-center text-white transition-all border border-white/20 shadow-sm"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
             </div>
           </div>
           

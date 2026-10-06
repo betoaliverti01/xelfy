@@ -182,7 +182,7 @@ export const base44 = {
       if (isSupabaseConfigured) {
         await supabase.auth.signOut();
       }
-      window.location.reload();
+      window.location.href = '/';
     },
 
     redirectToLogin() {
